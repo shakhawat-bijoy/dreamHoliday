@@ -70,33 +70,47 @@ const Reviews = () => {
     autoplaySpeed: 6000,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    swipeToSlide: true,
+    touchMove: true,
 
     responsive: [
       {
-        breakpoint: 1025,
-        settings: {
-          slidesToShow: 6,
-          slidesToScroll: 2,
-        }
-      },
-      {
-        breakpoint: 750,
+        breakpoint: 1400,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
         }
-      }, {
-        breakpoint: 700,
+      },
+      {
+        breakpoint: 1200,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
         }
       },
       {
-        breakpoint: 600,
+        breakpoint: 1024,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: false,
+          variableWidth: false,
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: false,
+          variableWidth: false,
         }
       },
       {
@@ -104,6 +118,8 @@ const Reviews = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          centerMode: false,
+          variableWidth: false,
           nextArrow: <SampleNextArrow2 />,
           prevArrow: <SamplePrevArrow2 />,
         }
@@ -113,14 +129,14 @@ const Reviews = () => {
 
   return (
     <div className='my-20'>
-      <Container className="flex mb-10">
-        <div className='flex flex-col gap-4 sm:mx-2'>
+      <Container className="flex mb-10 px-4 md:mx-0">
+        <div className='flex flex-col gap-4'>
           <h5 className='text-[#000000] text-[32px] leading-[44px] font-semibold font-montserrat tracking-[1.92px]'>Reviews</h5>
           <p className='font-montserrat text-[16px] leading-[24px] text-[#000000]'>What people says about Golobe facilities.</p>
         </div>
       </Container>
 
-      <div className='max-w-full gap-5 sm:mx-1'>
+      <div className='w-full px-4 sm:px-6 lg:px-8'>
         <Slider {...settings}>
           {/* Review Card 1 */}
           <div className="px-3">
@@ -407,6 +423,42 @@ const Reviews = () => {
                 </div>
               </div>
               <div className="absolute inset-0 bg-green-100 rounded-[12px] transform translate-x-3 translate-y-3 -z-10"></div>
+            </div>
+          </div>
+
+          {/* Review Card 9 */}
+          <div className="px-3 md:px-4">
+            <div className="relative w-full max-w-xs sm:max-w-sm lg:max-w-md mx-auto">
+              <div className="bg-white rounded-[12px] p-4 md:p-6 shadow-sm border border-gray-100 min-h-[400px] md:min-h-[450px]">
+                <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-2 md:mb-3 leading-tight line-clamp-2">
+                  "Incredible attention to detail"
+                </h3>
+                <p className="text-gray-600 text-xs md:text-sm mb-3 md:mb-4 leading-relaxed line-clamp-3">
+                  The level of service exceeded all expectations. Every request was handled promptly and professionally. Truly outstanding experience...
+                </p>
+                <div className="text-right mb-3 md:mb-4">
+                  <button className="text-gray-500 text-xs md:text-sm hover:text-gray-700 transition-colors">
+                    View more
+                  </button>
+                </div>
+                <div className="flex mb-3 md:mb-4 gap-1">
+                  <span className="text-yellow-400 text-sm md:text-lg">★★★★★</span>
+                </div>
+                <div className="mb-3 md:mb-4">
+                  <h4 className="font-semibold text-gray-900 text-sm md:text-base">Jessica</h4>
+                  <p className="text-gray-500 text-xs md:text-sm">Grand Resort & Spa</p>
+                </div>
+                <div className="flex items-center mb-3 md:mb-4">
+                  <div className="w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center mr-2">
+                    <span className="text-xs font-bold text-blue-600">G</span>
+                  </div>
+                  <span className="text-gray-500 text-xs md:text-sm">Google</span>
+                </div>
+                <div className="relative -mx-4 md:-mx-6 -mb-4 md:-mb-6 mt-auto">
+                  <Image src={reviews3} alt="Review location" className="w-full h-28 md:h-40 object-cover rounded-b-[12px]" />
+                </div>
+              </div>
+              <div className="absolute inset-0 bg-green-100 rounded-[12px] transform translate-x-2 md:translate-x-3 translate-y-2 md:translate-y-3 -z-10"></div>
             </div>
           </div>
 
