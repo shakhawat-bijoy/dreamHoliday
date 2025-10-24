@@ -86,15 +86,22 @@ const Banner = () => {
               style={{
                 position: "absolute",
                 left: "50%",
-                bottom: "10px",
+                bottom: "20px",
                 transform: "translateX(-50%)",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center"
               }}
             >
               <ul
                 style={{
                   margin: "0px",
                   display: "flex",
-                  gap: "20px"
+                  gap: "15px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  listStyle: "none",
+                  padding: "0px"
                 }}
               >
                 {dots}
@@ -108,9 +115,11 @@ const Banner = () => {
                 : "text-transparent border-b-2 border-[#fff] pb-1"
                 }`}
               style={{
-
-                padding: "0px 5px 4px 5px",
-                marginRight: "10px"
+                padding: "0px 8px 4px 8px",
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
               }}
             >
               0{i + 1}
@@ -185,7 +194,7 @@ const Banner = () => {
             </div>
           </div>
 
-          
+
         </Slider>
 
 

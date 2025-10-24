@@ -75,27 +75,27 @@ const Reviews = () => {
       {
         breakpoint: 1025,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 6,
+          slidesToScroll: 2,
         }
       },
       {
         breakpoint: 750,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 4,
           slidesToScroll: 1,
         }
       }, {
         breakpoint: 700,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 3,
           slidesToScroll: 1,
         }
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
         }
       },
@@ -114,13 +114,13 @@ const Reviews = () => {
   return (
     <div className='my-20'>
       <Container className="flex mb-10">
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 sm:mx-2'>
           <h5 className='text-[#000000] text-[32px] leading-[44px] font-semibold font-montserrat tracking-[1.92px]'>Reviews</h5>
           <p className='font-montserrat text-[16px] leading-[24px] text-[#000000]'>What people says about Golobe facilities.</p>
         </div>
       </Container>
 
-      <div className='max-w-full gap-5'>
+      <div className='max-w-full gap-5 sm:mx-1'>
         <Slider {...settings}>
           {/* Review Card 1 */}
           <div className="px-3">
