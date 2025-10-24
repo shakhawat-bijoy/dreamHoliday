@@ -5,7 +5,7 @@ const FlightHotelCard = () => {
   return (
     <div>
         <Container>
-            <div className='my-5 text-center text-2xl'>FlightHotelCard</div>
+            <div className='my-5 text-center text-2xl'>FlightHotelCard - Sazzad</div>
         </Container>
     </div>
   )

@@ -1,12 +1,16 @@
 import React from 'react'
+import Container from './Container'
 
 const Navbar = () => {
     return (
-        <div className="bg-gray-800 text-white p-4 m-4 rounded-t-xl">
-            <div className="max-w-[1300px] mx-auto text-center">
-                <p>Navbar</p>
+        <Container>
+            <div className="bg-gray-800 text-white p-4 my-4 rounded-t-xl">
+                <div className="text-center">
+                    <p>Navbar - Sazzad
+                    </p>
+                </div>
             </div>
-        </div>
+        </Container>
     )
 }
 
