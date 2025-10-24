@@ -129,7 +129,7 @@ const Reviews = () => {
 
   return (
     <div className='my-20'>
-      <Container className="flex mb-10 px-4 md:mx-0">
+      <Container className="flex mb-10 px-4 md:px-0">
         <div className='flex flex-col gap-4'>
           <h5 className='text-[#000000] text-[32px] leading-[44px] font-semibold font-montserrat tracking-[1.92px]'>Reviews</h5>
           <p className='font-montserrat text-[16px] leading-[24px] text-[#000000]'>What people says about Golobe facilities.</p>
