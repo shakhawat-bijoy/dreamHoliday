@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Image from '../common/Image'
 import Container from '../common/Container'
 import Slider from 'react-slick'
-import { Link } from 'react-router'
 
 import banner1 from '../../assets/images/banner1.png'
 import banner2 from '../../assets/images/banner2.png'
@@ -10,13 +9,6 @@ import banner3 from '../../assets/images/banner3.png'
 import banner4 from '../../assets/images/banner4.png'
 import banner5 from '../../assets/images/banner5.jpg'
 import banner6 from '../../assets/images/banner6.jpg'
-import banner7 from '../../assets/images/banner7.jpg'
-import banner8 from '../../assets/images/banner8.jpg'
-import banner9 from '../../assets/images/banner9.jpg'
-import banner10 from '../../assets/images/banner10.jpg'
-import banner11 from '../../assets/images/banner11.jpg'
-import banner12 from '../../assets/images/banner12.jpg'
-import banner13 from '../../assets/images/banner13.jpg'
 
 const Banner = () => {
 
@@ -64,55 +56,6 @@ const Banner = () => {
       subtitle: "Mountain Escape",
       title: "Nature's Beauty",
       description: "Breathtaking views and fresh air"
-    },
-    {
-      id: 7,
-      image: banner7,
-      subtitle: "City Adventures",
-      title: "Urban Explorer",
-      description: "Discover vibrant city life and culture"
-    },
-    {
-      id: 8,
-      image: banner8,
-      subtitle: "Cultural Journey",
-      title: "Heritage Sites",
-      description: "Explore rich history and traditions"
-    },
-    {
-      id: 9,
-      image: banner9,
-      subtitle: "Romantic Escape",
-      title: "Perfect Honeymoon",
-      description: "Create magical moments together"
-    },
-    {
-      id: 10,
-      image: banner10,
-      subtitle: "Family Fun",
-      title: "Kids & Adults",
-      description: "Entertainment for the whole family"
-    },
-    {
-      id: 11,
-      image: banner11,
-      subtitle: "Wellness Retreat",
-      title: "Mind & Body",
-      description: "Rejuvenate your spirit and soul"
-    },
-    {
-      id: 12,
-      image: banner12,
-      subtitle: "Adventure Sports",
-      title: "Thrill Seekers",
-      description: "Adrenaline-pumping activities await"
-    },
-    {
-      id: 13,
-      image: banner13,
-      subtitle: "Peaceful Sanctuary",
-      title: "Serene Escape",
-      description: "Find tranquility in beautiful surroundings"
     }
   ]
 
@@ -194,8 +137,8 @@ const Banner = () => {
           absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
           w-2 h-2 rounded-full transition-all duration-300 ease-in-out
           ${i === active
-            ? 'bg-white scale-100 opacity-100 shadow-lg shadow-white/50 transition-all duration-300 ease-in-out'
-            : 'bg-white/60 scale-0 opacity-0 group-hover:scale-75 group-hover:opacity-80 transition-all duration-300 ease-in-out'
+            ? 'bg-white scale-100 opacity-100 shadow-lg shadow-white/50'
+            : 'bg-white/60 scale-0 opacity-0 group-hover:scale-75 group-hover:opacity-80'
           }
         `} />
       </div>
@@ -287,23 +230,25 @@ const Banner = () => {
 
   return (
     <div>
-      <Container className="relative pt-12 pb-[92px] rounded-b-3xl">
-        <p className='-rotate-90 text-white text-lg leading-8 inline-block my-auto absolute top-1/2'>
-          <Link>#Gericht</Link>
-        </p>
-
+      <Container className="relative pt-6 sm:pt-8 md:pt-10 lg:pt-12 pb-16 sm:pb-20 md:pb-24 lg:pb-[92px] rounded-b-3xl">
 
 
         <Slider {...settings}>
           {bannerData.map((banner) => (
             <div key={banner.id}>
-              <div className='h-[581px] flex items-center justify-center'>
+              <div className='h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] xl:h-[581px] flex items-center justify-center'>
                 <div className='w-full h-full relative'>
                   <Image src={banner.image} className="w-full h-full object-cover" />
-                  <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center'>
-                    <p className='text-white text-[45px] font-bold font-league'>{banner.subtitle}</p>
-                    <h1 className='text-white text-[80px] font-bold font-league tracking-wide uppercase'>{banner.title}</h1>
-                    <p className='text-white text-[20px] font-semibold font-montserrat'>{banner.description}</p>
+                  <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-4 sm:px-6 lg:px-8 max-w-6xl w-full'>
+                    <p className='text-white text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-[35px] 2xl:text-[40px] font-bold font-league mb-2 sm:mb-3 lg:mb-4'>
+                      {banner.subtitle}
+                    </p>
+                    <h1 className='text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[60px] 2xl:text-[75px] font-bold font-league tracking-wide uppercase leading-tight mb-3 sm:mb-4 lg:mb-6'>
+                      {banner.title}
+                    </h1>
+                    <p className='text-white text-sm sm:text-base md:text-lg lg:text-xl xl:text-[18px] 2xl:text-[20px] font-semibold font-montserrat max-w-3xl mx-auto leading-relaxed'>
+                      {banner.description}
+                    </p>
                   </div>
                 </div>
               </div>
