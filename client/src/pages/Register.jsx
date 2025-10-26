@@ -85,6 +85,19 @@ const Register = () => {
         navigate('/add-payment-method')
     }
 
+    // Check if all required fields are filled
+    const isFormValid = () => {
+        return (
+            formData.firstName.trim() !== '' &&
+            formData.lastName.trim() !== '' &&
+            formData.email.trim() !== '' &&
+            formData.phoneNumber.trim() !== '' &&
+            formData.password.trim() !== '' &&
+            formData.confirmPassword.trim() !== '' &&
+            agreeToTerms
+        )
+    }
+
     const sliderSettings = {
         dots: true,
         arrows: false,
@@ -434,10 +447,12 @@ const Register = () => {
                                     {/* Create Account Button */}
                                     <div>
                                         <button
-                                            onClick={handleSubmit}
                                             type="submit"
-                                            disabled={!agreeToTerms}
-                                            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                            disabled={!isFormValid()}
+                                            className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white transition-colors ${isFormValid()
+                                                ? 'bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500'
+                                                : 'bg-gray-300 cursor-not-allowed opacity-50'
+                                                }`}
                                         >
                                             Create account
                                         </button>

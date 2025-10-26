@@ -22,6 +22,8 @@ const AddPaymentMethod = () => {
         country: 'United States',
         secureInfo: false,
     })
+    const [cardType, setCardType] = useState('')
+    const [cardError, setCardError] = useState('')
 
     const loginSliderData = [
         {
@@ -56,11 +58,57 @@ const AddPaymentMethod = () => {
         }
     ]
 
+    // Simple card type detection
+    const detectCardType = (number) => {
+        const cleanNumber = number.replace(/\D/g, '')
+
+        // Visa: starts with 4
+        if (/^4/.test(cleanNumber)) return 'visa'
+        // Mastercard: starts with 5[1-5] or 2[2-7]
+        if (/^5[1-5]/.test(cleanNumber) || /^2[2-7]/.test(cleanNumber)) return 'mastercard'
+        // American Express: starts with 34 or 37
+        if (/^3[47]/.test(cleanNumber)) return 'amex'
+        // Discover: starts with 6
+        if (/^6/.test(cleanNumber)) return 'discover'
+
+        return ''
+    }
+
     const handlePaymentChange = (e) => {
+        const { name, value } = e.target
+
         setPaymentData({
             ...paymentData,
-            [e.target.name]: e.target.value,
+            [name]: value,
         })
+
+        // Only validate card type for card number field
+        if (name === 'cardNumber') {
+            const detectedType = detectCardType(value)
+            setCardType(detectedType)
+
+            if (value.trim() !== '' && detectedType === '') {
+                setCardError('Unsupported card type. Please use Visa, Mastercard, American Express, or Discover.')
+            } else {
+                setCardError('')
+            }
+        }
+    }
+
+    // Get card type display info
+    const getCardTypeInfo = () => {
+        switch (cardType) {
+            case 'visa':
+                return { name: 'VISA', color: 'bg-blue-600' }
+            case 'mastercard':
+                return { name: 'MC', color: 'bg-red-500' }
+            case 'amex':
+                return { name: 'AMEX', color: 'bg-green-600' }
+            case 'discover':
+                return { name: 'DISC', color: 'bg-orange-500' }
+            default:
+                return { name: 'CARD', color: 'bg-gray-400' }
+        }
     }
 
     const handleSubmit = (e) => {
@@ -288,14 +336,20 @@ const AddPaymentMethod = () => {
                                                 value={paymentData.cardNumber}
                                                 onChange={handlePaymentChange}
                                                 placeholder="1234 1234 1234 1234"
-                                                className="appearance-none relative block w-full px-3 py-3 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                                                className={`appearance-none relative block w-full px-3 py-3 pr-10 border placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 sm:text-sm ${cardError
+                                                    ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
+                                                    : 'border-gray-300 focus:ring-teal-500 focus:border-teal-500'
+                                                    }`}
                                             />
                                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                                <div className="w-8 h-5 bg-blue-600 rounded text-white text-xs flex items-center justify-center">
-                                                    VISA
+                                                <div className={`w-8 h-5 rounded text-white text-xs flex items-center justify-center ${getCardTypeInfo().color}`}>
+                                                    {getCardTypeInfo().name}
                                                 </div>
                                             </div>
                                         </div>
+                                        {cardError && (
+                                            <p className="mt-1 text-sm text-red-600">{cardError}</p>
+                                        )}
                                     </div>
 
                                     {/* Expiry Date and CVC */}
@@ -322,7 +376,7 @@ const AddPaymentMethod = () => {
                                             <input
                                                 id="cvc"
                                                 name="cvc"
-                                                type="text"
+                                                type="number"
                                                 required
                                                 value={paymentData.cvc}
                                                 onChange={handlePaymentChange}
