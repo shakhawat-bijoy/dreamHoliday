@@ -66,6 +66,9 @@ const Login = () => {
     console.log('Login attempt:', formData)
   }
 
+  // Check if both email and password are filled
+  const isFormValid = formData.email.trim() !== '' && formData.password.trim() !== ''
+
   const sliderSettings = {
     dots: true,
     arrows: false,
@@ -313,8 +316,13 @@ const Login = () => {
                   {/* Login Button */}
                   <div>
                     <button
+                      onClick={handleSubmit}  
                       type="submit"
-                      className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors"
+                      disabled={!isFormValid}
+                      className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white transition-colors ${isFormValid
+                        ? 'bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500'
+                        : 'bg-gray-300 cursor-not-allowed'
+                        }`}
                     >
                       Login
                     </button>
@@ -355,7 +363,7 @@ const Login = () => {
                         </svg>
                       }
                       className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
-                      to="/"
+                      to="#"
                       onClick={(e) => {
                         e.preventDefault()
                         console.log('Facebook login')
@@ -384,7 +392,7 @@ const Login = () => {
                         </svg>
                       }
                       className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
-                      to="/"
+                      to="#"
                       onClick={(e) => {
                         e.preventDefault()
                         console.log('Google login')
@@ -401,7 +409,7 @@ const Login = () => {
                         </svg>
                       }
                       className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
-                      to="/"
+                      to="#"
                       onClick={(e) => {
                         e.preventDefault()
                         console.log('Apple login')

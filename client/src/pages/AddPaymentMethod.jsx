@@ -88,7 +88,7 @@ const AddPaymentMethod = () => {
             <div
                 style={{
                     position: "absolute",
-                    bottom: "8%",
+                    bottom: "1%",
                     left: "50%",
                     transform: "translateX(-50%)",
                 }}
@@ -386,6 +386,7 @@ const AddPaymentMethod = () => {
                                     {/* Add Payment Method Button */}
                                     <div>
                                         <Button
+                                            onClick={handleSubmit}
                                             text="Add Payment Method"
                                             type="submit"
                                             to='/account'

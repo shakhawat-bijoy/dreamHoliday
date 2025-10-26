@@ -69,6 +69,7 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log('Signup attempt:', formData)
 
         if (formData.password !== formData.confirmPassword) {
             alert('Passwords do not match')
@@ -103,7 +104,7 @@ const Register = () => {
             <div
                 style={{
                     position: "absolute",
-                    bottom: "8%",
+                    bottom: "1%",
                     left: "50%",
                     transform: "translateX(-50%)",
                 }}
@@ -433,6 +434,7 @@ const Register = () => {
                                     {/* Create Account Button */}
                                     <div>
                                         <button
+                                            onClick={handleSubmit}
                                             type="submit"
                                             disabled={!agreeToTerms}
                                             className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -476,7 +478,7 @@ const Register = () => {
                                                 </svg>
                                             }
                                             className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
-                                            to="/"
+                                            to="#"
                                             onClick={(e) => {
                                                 e.preventDefault()
                                                 console.log('Facebook signup')
@@ -505,7 +507,7 @@ const Register = () => {
                                                 </svg>
                                             }
                                             className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
-                                            to="/"
+                                            to="#"
                                             onClick={(e) => {
                                                 e.preventDefault()
                                                 console.log('Google signup')
@@ -522,7 +524,7 @@ const Register = () => {
                                                 </svg>
                                             }
                                             className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
-                                            to="/"
+                                            to="#"
                                             onClick={(e) => {
                                                 e.preventDefault()
                                                 console.log('Apple signup')
