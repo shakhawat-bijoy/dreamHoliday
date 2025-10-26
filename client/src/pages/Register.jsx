@@ -232,7 +232,7 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen py-4 md:py-0">
             <Container>
                 <div className="min-h-screen flex">
                     {/* Left Side - Slider */}
