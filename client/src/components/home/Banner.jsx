@@ -230,7 +230,7 @@ const Banner = () => {
 
   return (
     <div>
-      <Container className="relative pt-6 sm:pt-8 md:pt-10 lg:pt-12 pb-16 sm:pb-20 md:pb-24 lg:pb-[92px] rounded-b-3xl">
+      <Container className="relative pb-16 sm:pb-20 md:pb-24 lg:pb-[92px] rounded-3xl">
 
 
         <Slider {...settings}>
@@ -238,7 +238,7 @@ const Banner = () => {
             <div key={banner.id}>
               <div className='h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] xl:h-[581px] flex items-center justify-center'>
                 <div className='w-full h-full relative'>
-                  <Image src={banner.image} className="w-full h-full object-cover" />
+                  <Image src={banner.image} className="w-full h-full object-cover rounded-3xl" />
                   <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-4 sm:px-6 lg:px-8 max-w-6xl w-full'>
                     <p className='text-white text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-[35px] 2xl:text-[40px] font-bold font-league mb-2 sm:mb-3 lg:mb-4'>
                       {banner.subtitle}

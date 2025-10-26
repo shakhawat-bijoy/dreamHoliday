@@ -6,71 +6,71 @@ import reviews2 from '../../assets/images/reviews2.png'
 import reviews3 from '../../assets/images/reviews3.png'
 
 import Slider from 'react-slick'
-// import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
+import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 
-// function SampleNextArrow(props) {
-//   const { style, onClick } = props;
-//   return (
-//     <div
-//       className='w-16 h-16 absolute right-8 top-1/2 translate-y-[-50%] rounded-full border !flex justify-center items-center cursor-pointer bg-white shadow-lg z-10'
-//       style={{ ...style, display: "block", }}
-//       onClick={onClick}
-//     >
-//       <FaArrowRightLong className='text-black' />
-//     </div>
-//   );
-// }
+function SampleNextArrow(props) {
+  const { style, onClick } = props;
+  return (
+    <div
+      className='w-14 h-14 absolute right-8 top-1/2 translate-y-[-50%] rounded-full !flex justify-center items-center cursor-pointer bg-transparent shadow-lg z-10'
+      style={{ ...style, display: "block", }}
+      onClick={onClick}
+    >
+      <FaArrowRightLong className='text-black' />
+    </div>
+  );
+}
 
-// function SamplePrevArrow(props) {
-//   const { style, onClick } = props;
-//   return (
-//     <div
-//       className='w-16 h-16 absolute left-8 top-1/2 translate-y-[-50%] rounded-full border !flex justify-center items-center z-50 cursor-pointer bg-white shadow-lg'
-//       style={{ ...style, display: "block", }}
-//       onClick={onClick}
-//     >
-//       <FaArrowLeftLong className='text-black' />
-//     </div>
-//   );
-// }
+function SamplePrevArrow(props) {
+  const { style, onClick } = props;
+  return (
+    <div
+      className='w-14 h-14 absolute left-8 top-1/2 translate-y-[-50%] rounded-full !flex justify-center items-center z-50 cursor-pointer bg-transparent shadow-lg'
+      style={{ ...style, display: "block", }}
+      onClick={onClick}
+    >
+      <FaArrowLeftLong className='text-black' />
+    </div>
+  );
+}
 
-// function SampleNextArrow2(props) {
-//   const { style, onClick } = props;
-//   return (
-//     <div
-//       className='lg:w-16 lg:h-16 w-10 h-10 absolute lg:right-8 right-4 top-1/2 translate-y-[-50%] rounded-full bg-white shadow-lg !flex justify-center items-center cursor-pointer z-10'
-//       style={{ ...style, display: "block", }}
-//       onClick={onClick}
-//     >
-//       <FaArrowRightLong className='text-black' />
-//     </div>
-//   );
-// }
+function SampleNextArrow2(props) {
+  const { style, onClick } = props;
+  return (
+    <div
+      className='lg:w-16 lg:h-16 w-10 h-10 absolute lg:right-8 right-4 top-1/2 translate-y-[-50%] rounded-full bg-white shadow-lg !flex justify-center items-center cursor-pointer z-10'
+      style={{ ...style, display: "block", }}
+      onClick={onClick}
+    >
+      <FaArrowRightLong className='text-black' />
+    </div>
+  );
+}
 
-// function SamplePrevArrow2(props) {
-//   const { style, onClick } = props;
-//   return (
-//     <div
-//       className='lg:w-16 lg:h-16 w-10 h-10 absolute lg:left-8 left-4 top-1/2 translate-y-[-50%] rounded-full bg-white shadow-lg !flex justify-center items-center z-50 cursor-pointer'
-//       style={{ ...style, display: "block", }}
-//       onClick={onClick}
-//     >
-//       <FaArrowLeftLong className='text-black' />
-//     </div>
-//   );
-// }
+function SamplePrevArrow2(props) {
+  const { style, onClick } = props;
+  return (
+    <div
+      className='lg:w-16 lg:h-16 w-10 h-10 absolute lg:left-8 left-4 top-1/2 translate-y-[-50%] rounded-full bg-white shadow-lg !flex justify-center items-center z-50 cursor-pointer'
+      style={{ ...style, display: "block", }}
+      onClick={onClick}
+    >
+      <FaArrowLeftLong className='text-black' />
+    </div>
+  );
+}
 
 const Reviews = () => {
   var settings = {
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 1,
-    dots: true,
+    dots: false,
     autoplay: true,
     speed: 1000,
     autoplaySpeed: 6000,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
     swipeToSlide: true,
     touchMove: true,
     variableWidth: false,
@@ -123,8 +123,8 @@ const Reviews = () => {
           slidesToScroll: 1,
           centerMode: false,
           variableWidth: false,
-          // nextArrow: <SampleNextArrow2 />,
-          // prevArrow: <SamplePrevArrow2 />,
+          nextArrow: <SampleNextArrow2 />,
+          prevArrow: <SamplePrevArrow2 />,
         }
       }
     ]

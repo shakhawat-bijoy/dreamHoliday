@@ -7,7 +7,7 @@ import Reviews from '../components/home/Reviews'
 
 const Home = () => {
   return (
-    <div>
+    <div className='mt-5'>
         <Banner/>
         <FlightSearch/>
         <TripPlan/>
