@@ -10,7 +10,7 @@ import banner4 from '../../assets/images/banner4.png'
 import banner5 from '../../assets/images/banner5.jpg'
 import banner6 from '../../assets/images/banner6.jpg'
 
-const Banner = () => {
+const Banner = ({className}) => {
 
   let [active, setActive] = useState(0)
 
@@ -60,13 +60,13 @@ const Banner = () => {
   ]
 
   const settings = {
-    dots: true,
+    dots: false,
     arrows: false,
     infinite: true,
     fade: true,
     autoplay: true,
     speed: 2000,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 4000,
     slidesToShow: 1,
     slidesToScroll: 1,
 
@@ -94,55 +94,55 @@ const Banner = () => {
         }}> {dots} </ul>
       </div>
     ),
-    customPaging: i => (
-      <div className="relative group cursor-pointer">
-        {/* Progress Bar Container */}
-        <div className={`
-          relative w-16 h-1 rounded-full overflow-hidden transition-all duration-700 ease-in-out
-          ${i === active ? 'bg-white/30' : 'bg-white/20 hover:bg-white/25'}
-        `}>
-          {/* Active Progress Bar */}
-          <div className={`
-            absolute top-0 left-0 h-full rounded-full transition-all duration-700 ease-in-out
-            ${i === active
-              ? 'w-full bg-gradient-to-r from-blue-400 to-purple-500 shadow-lg shadow-blue-500/50'
-              : 'w-0 bg-white/40'
-            }
-          `} />
-        </div>
+    // customPaging: i => (
+    //   <div className="relative group cursor-pointer">
+    //     {/* Progress Bar Container */}
+    //     <div className={`
+    //       relative w-16 h-1 rounded-full overflow-hidden transition-all duration-700 ease-in-out
+    //       ${i === active ? 'bg-white/30' : 'bg-white/20 hover:bg-white/25'}
+    //     `}>
+    //       {/* Active Progress Bar */}
+    //       <div className={`
+    //         absolute top-0 left-0 h-full rounded-full transition-all duration-700 ease-in-out
+    //         ${i === active
+    //           ? 'w-full bg-gradient-to-r from-blue-400 to-purple-500 shadow-lg shadow-blue-500/50'
+    //           : 'w-0 bg-white/40'
+    //         }
+    //       `} />
+    //     </div>
 
-        {/* Slide Number */}
-        <div className={`
-          absolute -top-8 left-1/2 transform -translate-x-1/2 transition-all duration-500 ease-in-out
-          ${i === active
-            ? 'text-black font-bold text-sm opacity-100 scale-110'
-            : 'text-gray/60 font-medium text-xs opacity-70 scale-100 group-hover:opacity-90 group-hover:scale-105'
-          }
-        `}>
-          {String(i + 1).padStart(2, '0')}
-        </div>
+    //     {/* Slide Number */}
+    //     <div className={`
+    //       absolute -top-8 left-1/2 transform -translate-x-1/2 transition-all duration-500 ease-in-out
+    //       ${i === active
+    //         ? 'text-black font-bold text-sm opacity-100 scale-110'
+    //         : 'text-gray/60 font-medium text-xs opacity-70 scale-100 group-hover:opacity-90 group-hover:scale-105'
+    //       }
+    //     `}>
+    //       {String(i + 1).padStart(2, '0')}
+    //     </div>
 
-        {/* Hover Effect Circle */}
-        <div className={`
-          absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-          w-6 h-6 rounded-full border-2 transition-all duration-300 ease-in-out
-          ${i === active
-            ? 'border-white scale-100 opacity-100'
-            : 'border-white/40 scale-0 opacity-0 group-hover:scale-75 group-hover:opacity-60'
-          }
-        `} />
+    //     {/* Hover Effect Circle */}
+    //     <div className={`
+    //       absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+    //       w-6 h-6 rounded-full border-2 transition-all duration-300 ease-in-out
+    //       ${i === active
+    //         ? 'border-white scale-100 opacity-100'
+    //         : 'border-white/40 scale-0 opacity-0 group-hover:scale-75 group-hover:opacity-60'
+    //       }
+    //     `} />
 
-        {/* Active Dot */}
-        <div className={`
-          absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-          w-2 h-2 rounded-full transition-all duration-300 ease-in-out
-          ${i === active
-            ? 'bg-white scale-100 opacity-100 shadow-lg shadow-white/50'
-            : 'bg-white/60 scale-0 opacity-0 group-hover:scale-75 group-hover:opacity-80'
-          }
-        `} />
-      </div>
-    ),
+    //     {/* Active Dot */}
+    //     <div className={`
+    //       absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+    //       w-2 h-2 rounded-full transition-all duration-300 ease-in-out
+    //       ${i === active
+    //         ? 'bg-white scale-100 opacity-100 shadow-lg shadow-white/50'
+    //         : 'bg-white/60 scale-0 opacity-0 group-hover:scale-75 group-hover:opacity-80'
+    //       }
+    //     `} />
+    //   </div>
+    // ),
 
     responsive: [
       {
@@ -229,8 +229,8 @@ const Banner = () => {
 
 
   return (
-    <div>
-      <Container className="relative pb-16 sm:pb-20 md:pb-24 lg:pb-[92px] rounded-3xl">
+    <div className={`${className}`}>
+      <Container className="relative sm:pb-20 md:pb-24 lg:pb-0 rounded-3xl">
 
 
         <Slider {...settings}>

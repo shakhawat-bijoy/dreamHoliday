@@ -3,37 +3,42 @@ import { Plane, Building2, Menu, X } from 'lucide-react'
 import Container from './Container'
 import Button from './Buttton'
 import Image from './Image'
-import logoImage from '../../assets/images/navLogo.png'
-import { Link } from 'react-router'
+import logoImage from '../../assets/images/logo.png'
+import { Link, useLocation } from 'react-router'
 
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const location = useLocation()
+    const isAccountPage = location.pathname === '/account'
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen)
     }
 
+    const isHomePage = location.pathname === '/'
+    const isOtherRoute = !isHomePage && !isAccountPage
+
     return (
-        <nav className="absolute md:top-5 top-0 left-0 right-0 z-50 bg-transparent">
+        <nav className={`${isOtherRoute ? '' : isAccountPage ? 'absolute top-0' : 'absolute md:top-5 top-0'} ${!isOtherRoute ? 'absolute' : ''} left-0 right-0 z-50 bg-transparent`}>
             <Container className='px-2'>
                 <div className="relative z-10 flex items-center justify-between py-4">
                     {/* Left Side - Navigation Tabs (Desktop) */}
                     <div className="hidden lg:flex items-center gap-4">
-                        <Link to={'/'} className='flex items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/10'>
-                            <Plane className="w-4 h-4 text-white" />
-                            <span className="text-white">Find Flights</span>
+                        <Link to={'/flights'} className={`flex items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 ${isOtherRoute ? 'hover:bg-gray-100' : isAccountPage ? 'hover:bg-gray-100' : 'hover:bg-white/10'}`}>
+                            <Plane className={`w-4 h-4 ${isOtherRoute ? 'text-black' : isAccountPage ? 'text-black' : 'text-white'}`} />
+                            <span className={isOtherRoute ? 'text-black' : isAccountPage ? 'text-black' : 'text-white'}>Find Flights</span>
                         </Link>
 
-                        <Link to={'/'} className='flex items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-white/10'>
-                            <Building2 className="w-4 h-4 text-white" />
-                            <span className="text-white">Find Stays</span>
+                        <Link to={'/hotels'} className={`flex items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 ${isOtherRoute ? 'hover:bg-gray-100' : isAccountPage ? 'hover:bg-gray-100' : 'hover:bg-white/10'}`}>
+                            <Building2 className={`w-4 h-4 ${isOtherRoute ? 'text-black' : isAccountPage ? 'text-black' : 'text-white'}`} />
+                            <span className={isOtherRoute ? 'text-black' : isAccountPage ? 'text-black' : 'text-white'}>Find Stays</span>
                         </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
                     <button
                         onClick={toggleMobileMenu}
-                        className="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-all duration-300"
+                        className={`lg:hidden p-2 rounded-lg transition-all duration-300 ${isOtherRoute ? 'text-black hover:bg-gray-100' : isAccountPage ? 'text-black hover:bg-gray-100' : 'text-white hover:bg-white/10'}`}
                         aria-label="Toggle mobile menu"
                     >
                         {isMobileMenuOpen ? (
@@ -58,13 +63,13 @@ const Navbar = () => {
                         <Button
                             text="Login"
                             to="/login"
-                            className="text-white hover:text-black hover:bg-white font-medium px-4 py-2 transition-all duration-500 rounded-lg"
+                            className={isOtherRoute ? 'text-black hover:bg-gray-100 font-medium px-4 py-2 transition-all duration-500 rounded-lg' : isAccountPage ? 'text-black hover:bg-gray-100 font-medium px-4 py-2 transition-all duration-500 rounded-lg' : 'text-white hover:text-black hover:bg-white font-medium px-4 py-2 transition-all duration-500 rounded-lg'}
                         />
 
                         <Button
                             text="Sign up"
                             to="/register"
-                            className="text-white hover:text-black hover:bg-white font-medium px-4 py-2 transition-all duration-500 rounded-lg"
+                            className={isOtherRoute ? 'text-black hover:bg-gray-100 font-medium px-4 py-2 transition-all duration-500 rounded-lg' : isAccountPage ? 'text-black hover:bg-gray-100 font-medium px-4 py-2 transition-all duration-500 rounded-lg' : 'text-white hover:text-black hover:bg-white font-medium px-4 py-2 transition-all duration-500 rounded-lg'}
                         />
                     </div>
 
@@ -73,13 +78,13 @@ const Navbar = () => {
                         <Button
                             text="Login"
                             to="/login"
-                            className="text-white hover:text-black hover:bg-white font-medium px-3 py-2 text-sm transition-all duration-500 rounded-lg"
+                            className={isOtherRoute ? 'text-black hover:text-white hover:bg-black font-medium px-3 py-2 text-sm transition-all duration-500 rounded-lg' : isAccountPage ? 'text-black hover:text-white hover:bg-black font-medium px-3 py-2 text-sm transition-all duration-500 rounded-lg' : 'text-white hover:text-black hover:bg-white font-medium px-3 py-2 text-sm transition-all duration-500 rounded-lg'}
                         />
 
                         <Button
                             text="Sign up"
                             to="/register"
-                            className="text-white hover:text-black hover:bg-white font-medium px-3 py-2 text-sm transition-all duration-500 rounded-lg"
+                            className={isOtherRoute ? 'text-black hover:text-white hover:bg-black font-medium px-3 py-2 text-sm transition-all duration-500 rounded-lg' : isAccountPage ? 'text-black hover:text-white hover:bg-black font-medium px-3 py-2 text-sm transition-all duration-500 rounded-lg' : 'text-white hover:text-black hover:bg-white font-medium px-3 py-2 text-sm transition-all duration-500 rounded-lg'}
                         />
                     </div>
                 </div>
@@ -91,7 +96,7 @@ const Navbar = () => {
                             {/* Mobile Navigation Links */}
                             <div className="space-y-2">
                                 <Link
-                                    to={'/'}
+                                    to={'/flights'}
                                     className='flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-gray-100 text-gray-800'
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
@@ -100,7 +105,7 @@ const Navbar = () => {
                                 </Link>
 
                                 <Link
-                                    to={'/'}
+                                    to={'/hotels'}
                                     className='flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-gray-100 text-gray-800'
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >

@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 
 import RootLayout from './components/common/RootLayout'
+import Flights from './pages/Flights'
+import Hotels from './pages/Hotels'
 
 
 const App = () => {
@@ -27,6 +29,8 @@ const App = () => {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/add-payment-method" element={<AddPaymentMethod />}></Route>
         <Route path="/account" element={<Account />}></Route>
+        <Route path="/flights" element={<Flights />}></Route>
+        <Route path="/hotels" element={<Hotels />}></Route>
 
 
 
