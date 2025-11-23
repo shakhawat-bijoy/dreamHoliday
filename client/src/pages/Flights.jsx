@@ -10,7 +10,7 @@ const Flights = () => {
     <div>
       <Banner className={`mb-10`}/>
       <FlightHotelSearch initialTab="flights" />
-      <AttractionsMap/>
+      {/* <AttractionsMap/> */}
       <Destinations/>
       <TouristDestinations/>
     </div>
