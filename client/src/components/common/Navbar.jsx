@@ -38,7 +38,7 @@ const Navbar = () => {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={toggleMobileMenu}
-                        className={`lg:hidden p-2 rounded-lg transition-all duration-300 ${isOtherRoute ? 'text-black hover:bg-gray-100' : isAccountPage ? 'text-black hover:bg-gray-100' : 'text-white hover:bg-white/10'}`}
+                        className={`lg:hidden p-2 rounded-lg transition-all duration-300 cursor-pointer ${isOtherRoute ? 'text-black hover:bg-gray-100' : isAccountPage ? 'text-black hover:bg-gray-100' : 'text-white hover:bg-white/10'}`}
                         aria-label="Toggle mobile menu"
                     >
                         {isMobileMenuOpen ? (
@@ -91,7 +91,7 @@ const Navbar = () => {
 
                 {/* Mobile Menu Overlay */}
                 {isMobileMenuOpen && (
-                    <div className="lg:hidden absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-white/20">
+                    <div className="lg:hidden absolute top-18 left-0 right-0 mt-2 bg-white/70 rounded-xl shadow-lg border border-white/20 z-50">
                         <div className="p-4 space-y-4">
                             {/* Mobile Navigation Links */}
                             <div className="space-y-2">
@@ -101,7 +101,7 @@ const Navbar = () => {
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <Plane className="w-5 h-5 text-teal-600" />
-                                    <span className="font-medium">Find Flights</span>
+                                    <span className="font-bold">Find Flights</span>
                                 </Link>
 
                                 <Link
@@ -110,7 +110,7 @@ const Navbar = () => {
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <Building2 className="w-5 h-5 text-teal-600" />
-                                    <span className="font-medium">Find Stays</span>
+                                    <span className="font-bold">Find Stays</span>
                                 </Link>
                             </div>
 
@@ -119,14 +119,14 @@ const Navbar = () => {
                                 <Button
                                     text="Login"
                                     to="/login"
-                                    className="w-full text-center bg-transparent border border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white font-medium px-4 py-3 transition-all duration-300 rounded-lg"
+                                    className="w-full text-center bg-transparent border border-teal-600 text-black hover:bg-teal-600 hover:text-white font-bold px-4 py-3 transition-all duration-300 rounded-lg"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 />
 
                                 <Button
                                     text="Sign up"
                                     to="/register"
-                                    className="w-full text-center bg-transparent border border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white font-medium px-4 py-3 transition-all duration-300 rounded-lg"
+                                    className="w-full text-center bg-transparent border border-teal-600 text-black hover:bg-teal-600 hover:text-white font-bold px-4 py-3 transition-all duration-300 rounded-lg"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 />
                             </div>

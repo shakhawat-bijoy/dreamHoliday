@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -13,22 +12,8 @@ L.Icon.Default.mergeOptions({
 })
 
 const AttractionsMap = () => {
-  const [Leaflet, setLeaflet] = useState(null)
-
-  useEffect(() => {
-    let mounted = true
-    ;(async () => {
-      // load leaflet CSS + runtime modules only on client
-      await import('leaflet/dist/leaflet.css')
-      const { MapContainer, TileLayer, Marker, Popup } = await import('react-leaflet')
-      if (mounted) setLeaflet({ MapContainer, TileLayer, Marker, Popup })
-    })()
-    return () => { mounted = false }
-  }, [])
-
-  if (!Leaflet) return null // or a placeholder/skeleton
-
-  const { MapContainer, TileLayer, Marker, Popup } = Leaflet
+  // Paris coordinates: Eiffel Tower area
+  const position = [48.8584, 2.2945]
 
   return (
     <>
@@ -53,13 +38,19 @@ const AttractionsMap = () => {
 
       <div className='w-full h-[300px] sm:h-[400px] md:h-[500px]'>
         <MapContainer 
-          center={[6.9271, 79.8612]} 
-          zoom={8} 
+          center={position} 
+          zoom={15} 
+          scrollWheelZoom={true}
           style={{ height: '100%', width: '100%' }}
         >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <Marker position={[6.9271, 79.8612]}>
-            <Popup>Sri Lanka</Popup>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={position}>
+            <Popup>
+              Eiffel Tower, Paris <br /> A beautiful landmark in the heart of Paris.
+            </Popup>
           </Marker>
         </MapContainer>
       </div>
