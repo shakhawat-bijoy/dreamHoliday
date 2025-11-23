@@ -14,6 +14,7 @@ import {
 import RootLayout from './components/common/RootLayout'
 import Flights from './pages/Flights'
 import Hotels from './pages/Hotels'
+import Error from './components/common/Error'
 
 
 const App = () => {
@@ -22,7 +23,7 @@ const App = () => {
       <Route
         path="/"
         element={<RootLayout />}
-      // errorElement={<Error />}
+      errorElement={<Error />}
       >
         <Route index element={<Home />} ></Route>
         <Route path="/login" element={<Login />}></Route>

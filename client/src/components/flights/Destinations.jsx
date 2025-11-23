@@ -65,11 +65,11 @@ const Destinations = () => {
 
                   <div className="flex flex-wrap justify-center lg:justify-between items-center gap-4 md:gap-6">
                     {destinationsData.map((destination) => (
-                        <div key={destination.id} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] min-w-[280px] max-w-[296px] h-[420px] relative">
+                        <div key={destination.id} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] min-w-[280px] max-w-[396px] h-[420px] relative">
                             <Image
                                 src={destination.image}
                                 alt={destination.city}
-                                className="w-full h-full object-cover rounded-xl hover:scale-110 transition-transform duration-300"
+                                className="w-full h-full object-cover rounded-xl hover:scale-105 overflow-hidden transition-transform duration-300"
                             />
 
                             <div className="absolute bottom-0 right-0 left-0 p-5 rounded-b-xl flex flex-col gap-4 bg-gradient-to-t from-black/60 to-transparent">

@@ -1,8 +1,11 @@
 import React from 'react'
+import MyAccount from '../components/myaccount/MyAccount'
 
 const Account = () => {
   return (
-    <div className='text-center py-80 bg-gray-700 text-white text-5xl'>My Account</div>
+    <div>
+      <MyAccount/>
+    </div>
   )
 }
 
