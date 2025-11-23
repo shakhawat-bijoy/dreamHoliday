@@ -1,6 +1,6 @@
 import Container from '../common/Container'
 import Image from '../common/Image'
-import Button from '../common/Buttton'
+import Button from '../common/Button'
 import reviews1 from '../../assets/images/reviews1.png'
 import reviews2 from '../../assets/images/reviews2.png'
 import reviews3 from '../../assets/images/reviews3.png'

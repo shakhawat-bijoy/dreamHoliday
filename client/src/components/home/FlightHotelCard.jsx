@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from '../common/Container'
-import Button from '../common/Buttton'
+import Button from '../common/Button'
 import flights from '../../assets/images/flights.jpg'
 import hotels from '../../assets/images/hotels.jpg'
 

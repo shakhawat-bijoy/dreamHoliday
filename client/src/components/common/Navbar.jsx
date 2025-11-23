@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Plane, Building2, Menu, X } from 'lucide-react'
 import Container from './Container'
-import Button from './Buttton'
+import Button from './Button'
 import Image from './Image'
 import logoImage from '../../assets/images/logo.png'
 import { Link, useLocation } from 'react-router'

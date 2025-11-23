@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from '../common/Container'
-import Button from '../common/Buttton'
+import Button from '../common/Button'
 
 const TripPlan = ({className}) => {
     const destinations = [
