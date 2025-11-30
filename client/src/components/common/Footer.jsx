@@ -8,7 +8,7 @@ const Footer = () => {
         destinations: [
             "Payment-Method",
             "Account",
-            "France",
+            "ResetPassword",
             "Iceland"
         ],
         activities: [

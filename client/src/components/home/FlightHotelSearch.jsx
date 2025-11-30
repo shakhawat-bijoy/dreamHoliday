@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import { Plane, Hotel, ArrowLeftRight, Calendar, Search, MapPin, Edit3, Users } from 'lucide-react'
-
-const Container = ({ children, className }) => (
-  <div className={className}>{children}</div>
-)
+import Container from '../common/Container'
 
 const FlightHotelSearch = ({ className, initialTab = 'flights' }) => {
   const [activeTab, setActiveTab] = useState(initialTab)

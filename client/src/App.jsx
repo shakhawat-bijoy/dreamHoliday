@@ -15,6 +15,7 @@ import RootLayout from './components/common/RootLayout'
 import Flights from './pages/Flights'
 import Hotels from './pages/Hotels'
 import Error from './components/common/Error'
+import ResetPassword from './pages/ResetPassword'
 
 
 const App = () => {
@@ -32,7 +33,7 @@ const App = () => {
         <Route path="/account" element={<Account />}></Route>
         <Route path="/flights" element={<Flights />}></Route>
         <Route path="/hotels" element={<Hotels />}></Route>
-
+        <Route path='/ResetPassword' element={<ResetPassword/>}></Route>
 
 
       </Route>

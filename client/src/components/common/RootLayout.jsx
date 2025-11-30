@@ -5,8 +5,8 @@ import Footer from './Footer'
 
 const RootLayout = () => {
   const location = useLocation()
-  const hideNavbarRoutes = ['/login', '/register', '/add-payment-method']
-  const hideFooterRoutes = ['/login', '/register', '/add-payment-method']
+  const hideNavbarRoutes = ['/login', '/register', '/payment-method', '/resetpassword']
+  const hideFooterRoutes = ['/login', '/register', '/payment-method', '/resetpassword', '/account']
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname)
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname)
 
