@@ -6,8 +6,8 @@ import logoImage from '../../assets/images/logo.png'
 const Footer = () => {
     const footerData = {
         destinations: [
-            "Canada",
-            "Alaska",
+            "Payment-Method",
+            "Account",
             "France",
             "Iceland"
         ],
@@ -79,7 +79,7 @@ const Footer = () => {
                             {footerData.destinations.map((destination, index) => (
                                 <li key={index}>
                                     <Link
-                                        to={`/destinations/${destination.toLowerCase().replace(' ', '-')}`}
+                                        to={`/${destination.toLowerCase().replace(' ', '-')}`}
                                         className="text-sm hover:text-teal-100 transition-colors duration-200"
                                     >
                                         {destination}
