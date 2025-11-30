@@ -5,6 +5,7 @@ import {
   Edit3, Bell, Shield, Globe, LogOut, Trash2,
   Plus, Star, Plane, Download, Eye
 } from 'lucide-react'
+import { Link } from 'react-router'
 
 const Account = () => {
   const [activeTab, setActiveTab] = useState('profile')
@@ -221,9 +222,11 @@ const Account = () => {
             <p className="text-gray-500 mt-1">Manage your saved payment methods</p>
           </div>
 
-          <button className="flex items-center gap-2 px-6 py-3 bg-teal-500 text-white rounded-xl hover:bg-teal-600 transition-all duration-300 shadow-lg hover:shadow-xl font-medium">
-            <Plus className="w-5 h-5" /> Add Card
-          </button>
+          <Link to="/payment-method">
+            <button className="flex items-center gap-2 px-6 py-3 bg-teal-500 text-white rounded-xl hover:bg-teal-600 transition-all duration-300 shadow-lg hover:shadow-xl font-medium">
+              <Plus className="w-5 h-5" /> Add Card
+            </button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
