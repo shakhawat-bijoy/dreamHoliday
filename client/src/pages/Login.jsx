@@ -516,7 +516,7 @@ const Login = () => {
                         to="#"
                         onClick={(e) => {
                           e.preventDefault()
-                          console.log('Facebook login')
+                          toast.info('Facebook login coming soon!')
                         }}
                       />
 
@@ -562,7 +562,7 @@ const Login = () => {
                         to="#"
                         onClick={(e) => {
                           e.preventDefault()
-                          console.log('Apple login')
+                          toast.info('Apple login coming soon!')
                         }}
                       />
                     </div>

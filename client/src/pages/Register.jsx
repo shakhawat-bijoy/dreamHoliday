@@ -672,7 +672,7 @@ const Register = () => {
                                             to="#"
                                             onClick={(e) => {
                                                 e.preventDefault()
-                                                console.log('Facebook signup')
+                                                toast.info('Facebook sign-up coming soon!')
                                             }}
                                         />
 
@@ -718,7 +718,7 @@ const Register = () => {
                                             to="#"
                                             onClick={(e) => {
                                                 e.preventDefault()
-                                                console.log('Apple signup')
+                                                toast.info('Apple sign-up coming soon!')
                                             }}
                                         />
                                     </div>
