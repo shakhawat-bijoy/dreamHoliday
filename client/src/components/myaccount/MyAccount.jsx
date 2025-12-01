@@ -9,7 +9,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { onAuthStateChanged, signOut, updateProfile } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 import { toast } from 'react-toastify'
-import axios from 'axios'
 
 const Account = () => {
   const navigate = useNavigate()
@@ -42,50 +41,27 @@ const Account = () => {
   })
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        // Fetch user data from Firebase and database
-        try {
-          const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/users/${currentUser.uid}`)
-          
-          const userData = {
-            name: response.data.user?.name || currentUser.displayName || '',
-            email: currentUser.email || '',
-            phone: response.data.user?.phone || '',
-            address: response.data.user?.address || '',
-            dateOfBirth: response.data.user?.dateOfBirth || '',
-            avatar: currentUser.photoURL || '',
-            coverImage: response.data.user?.coverImage || '',
-            uid: currentUser.uid
-          }
-          
-          setUserInfo(userData)
-          setEditedInfo({
-            name: userData.name,
-            phone: userData.phone,
-            address: userData.address,
-            dateOfBirth: userData.dateOfBirth
-          })
-        } catch (error) {
-          console.error('Error fetching user data:', error)
-          // Use Firebase data as fallback
-          setUserInfo({
-            name: currentUser.displayName || '',
-            email: currentUser.email || '',
-            phone: '',
-            address: '',
-            dateOfBirth: '',
-            avatar: currentUser.photoURL || '',
-            coverImage: '',
-            uid: currentUser.uid
-          })
-          setEditedInfo({
-            name: currentUser.displayName || '',
-            phone: '',
-            address: '',
-            dateOfBirth: ''
-          })
+        // Fetch user data from Firebase only
+        const userData = {
+          name: currentUser.displayName || '',
+          email: currentUser.email || '',
+          phone: currentUser.phoneNumber || '',
+          address: '',
+          dateOfBirth: '',
+          avatar: currentUser.photoURL || '',
+          coverImage: '',
+          uid: currentUser.uid
         }
+        
+        setUserInfo(userData)
+        setEditedInfo({
+          name: userData.name,
+          phone: userData.phone,
+          address: userData.address,
+          dateOfBirth: userData.dateOfBirth
+        })
       }
       setLoading(false)
     })
@@ -103,16 +79,21 @@ const Account = () => {
 
   const handleSave = async (field) => {
     try {
-      // Update in database
-      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/users/${userInfo.uid}`, {
-        [field]: editedInfo[field]
-      })
-
-      // Update Firebase profile if name changed
-      if (field === 'name') {
-        await updateProfile(auth.currentUser, {
-          displayName: editedInfo[field]
-        })
+      // Update Firebase profile
+      if (auth.currentUser) {
+        const updates = {}
+        
+        if (field === 'name') {
+          updates.displayName = editedInfo[field]
+        }
+        
+        if (field === 'phone') {
+          updates.phoneNumber = editedInfo[field]
+        }
+        
+        if (Object.keys(updates).length > 0) {
+          await updateProfile(auth.currentUser, updates)
+        }
       }
 
       // Update local state

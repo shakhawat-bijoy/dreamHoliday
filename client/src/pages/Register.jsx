@@ -11,7 +11,7 @@ import banner1 from '../assets/images/banner1.png'
 import banner2 from '../assets/images/banner2.png'
 import banner3 from '../assets/images/banner3.png'
 import Image from '../components/common/Image'
-import { createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth"
 import { auth } from '../firebaseConfig'
 import { Triangle } from 'react-loader-spinner'
 import { ToastContainer, toast } from 'react-toastify'
@@ -161,6 +161,13 @@ const Register = () => {
                 formData.email,
                 formData.password
             )
+
+            // Update Firebase profile with display name and phone
+            const userName = `${formData.firstName} ${formData.lastName}`
+            await updateProfile(userCredential.user, {
+                displayName: userName,
+                phoneNumber: formData.phoneNumber
+            })
 
             // Send email verification
             await sendEmailVerification(userCredential.user)
