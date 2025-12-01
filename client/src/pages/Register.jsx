@@ -400,7 +400,7 @@ const Register = () => {
         <>
             <ToastContainer
                 position="top-right"
-                autoClose={1000}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
@@ -609,7 +609,7 @@ const Register = () => {
                                                 Terms
                                             </Link>{' '}
                                             and{' '}
-                                            <Link to="/privacy" className="text-teal-600 hover:text-teal-500">
+                                            <Link to="/Privecy-Policy" className="text-teal-600 hover:text-teal-500">
                                                 Privacy Policies
                                             </Link>
                                         </label>

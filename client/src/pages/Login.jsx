@@ -343,7 +343,7 @@ const Login = () => {
     <>
       <ToastContainer
         position="top-right"
-        autoClose={1000}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -444,7 +444,7 @@ const Login = () => {
 
                       <div className="text-sm">
                         <Link
-                          to="/Reset-Password"
+                          to="/reset-password"
                           className="font-medium text-teal-600 hover:text-teal-500"
                         >
                           Forgot Password?
