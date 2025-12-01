@@ -11,6 +11,11 @@ import banner1 from '../assets/images/banner1.png'
 import banner2 from '../assets/images/banner2.png'
 import banner3 from '../assets/images/banner3.png'
 import Image from '../components/common/Image'
+import { createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { auth } from '../firebaseConfig'
+import { Triangle } from 'react-loader-spinner'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Register = () => {
     const navigate = useNavigate()
@@ -26,6 +31,15 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [agreeToTerms, setAgreeToTerms] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [errors, setErrors] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        confirmPassword: ''
+    })
 
     const loginSliderData = [
         {
@@ -65,24 +79,155 @@ const Register = () => {
             ...formData,
             [e.target.name]: e.target.value,
         })
+        // Clear error for this field
+        setErrors({
+            ...errors,
+            [e.target.name]: ''
+        })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log('Signup attempt:', formData)
-
-        if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match')
-            return
+    const validateForm = () => {
+        let valid = true
+        const newErrors = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+            password: '',
+            confirmPassword: ''
         }
+
+        if (!formData.firstName.trim()) {
+            newErrors.firstName = 'First name is required'
+            valid = false
+        }
+
+        if (!formData.lastName.trim()) {
+            newErrors.lastName = 'Last name is required'
+            valid = false
+        }
+
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email is required'
+            valid = false
+        } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/.test(formData.email)) {
+            newErrors.email = 'Invalid email address'
+            valid = false
+        }
+
+        if (!formData.phoneNumber.trim()) {
+            newErrors.phoneNumber = 'Phone number is required'
+            valid = false
+        }
+
+        if (!formData.password) {
+            newErrors.password = 'Password is required'
+            valid = false
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(formData.password)) {
+            newErrors.password = 'Password must contain at least 1 lowercase, 1 uppercase, 1 numeric, 1 special character and be 8+ characters'
+            valid = false
+        }
+
+        if (!formData.confirmPassword) {
+            newErrors.confirmPassword = 'Please confirm your password'
+            valid = false
+        } else if (formData.confirmPassword !== formData.password) {
+            newErrors.confirmPassword = 'Passwords do not match'
+            valid = false
+        }
+
+        setErrors(newErrors)
+        return valid
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
         if (!agreeToTerms) {
-            alert('Please agree to the terms and conditions')
+            toast.error('Please agree to the terms and conditions')
             return
         }
 
-        // Navigate to payment method page
-        navigate('/add-payment-method')
+        if (!validateForm()) {
+            return
+        }
+
+        setLoading(true)
+
+        try {
+            // Create user with Firebase
+            const userCredential = await createUserWithEmailAndPassword(
+                auth,
+                formData.email,
+                formData.password
+            )
+
+            // Send email verification
+            await sendEmailVerification(userCredential.user)
+
+            toast.success('Registration successful! Please check your email for verification.')
+
+            // Clear form
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phoneNumber: '',
+                password: '',
+                confirmPassword: '',
+            })
+            setAgreeToTerms(false)
+
+            // Navigate to login after 2 seconds
+            setTimeout(() => {
+                navigate('/login')
+            }, 2000)
+
+        } catch (error) {
+            console.error('Registration error:', error)
+            
+            if (error.code === 'auth/email-already-in-use') {
+                setErrors({ ...errors, email: 'Email already in use' })
+                toast.error('Email already in use')
+            } else if (error.code === 'auth/weak-password') {
+                setErrors({ ...errors, password: 'Password is too weak' })
+                toast.error('Password is too weak')
+            } else {
+                toast.error('Registration failed. Please try again.')
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleGoogleSignUp = async () => {
+        setLoading(true)
+        const provider = new GoogleAuthProvider()
+
+        try {
+            const result = await signInWithPopup(auth, provider)
+            const user = result.user
+
+            toast.success(`Welcome ${user.displayName || 'User'}! Registration successful.`)
+
+            // Navigate to home or dashboard after successful registration
+            setTimeout(() => {
+                navigate('/')
+            }, 1000)
+
+        } catch (error) {
+            console.error('Google sign-up error:', error)
+            
+            if (error.code === 'auth/popup-closed-by-user') {
+                toast.error('Sign-up cancelled')
+            } else if (error.code === 'auth/account-exists-with-different-credential') {
+                toast.error('An account already exists with this email')
+            } else {
+                toast.error('Google sign-up failed. Please try again.')
+            }
+        } finally {
+            setLoading(false)
+        }
     }
 
     // Check if all required fields are filled
@@ -245,8 +390,21 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen py-4 md:py-0">
-            <Container>
+        <>
+            <ToastContainer
+                position="top-right"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            <div className="min-h-screen py-4 md:py-0">
+                <Container>
                 <div className="min-h-screen flex">
                     {/* Left Side - Slider */}
                     <div className="hidden lg:block relative flex-1 min-h-screen overflow-hidden rounded-3xl">
@@ -308,8 +466,9 @@ const Register = () => {
                                                 value={formData.firstName}
                                                 onChange={handleChange}
                                                 placeholder="John"
-                                                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                                                className={`appearance-none relative block w-full px-3 py-3 border ${errors.firstName ? 'border-red-500' : 'border-gray-300'} placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm`}
                                             />
+                                            {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
                                         </div>
                                         <div>
                                             <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -323,8 +482,9 @@ const Register = () => {
                                                 value={formData.lastName}
                                                 onChange={handleChange}
                                                 placeholder="Doe"
-                                                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                                                className={`appearance-none relative block w-full px-3 py-3 border ${errors.lastName ? 'border-red-500' : 'border-gray-300'} placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm`}
                                             />
+                                            {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
                                         </div>
                                     </div>
 
@@ -342,8 +502,9 @@ const Register = () => {
                                                 value={formData.email}
                                                 onChange={handleChange}
                                                 placeholder="john.doe@gmail.com"
-                                                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                                                className={`appearance-none relative block w-full px-3 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm`}
                                             />
+                                            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                                         </div>
                                         <div>
                                             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
@@ -357,8 +518,9 @@ const Register = () => {
                                                 value={formData.phoneNumber}
                                                 onChange={handleChange}
                                                 placeholder="+1 (555) 000-0000"
-                                                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                                                className={`appearance-none relative block w-full px-3 py-3 border ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'} placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm`}
                                             />
+                                            {errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>}
                                         </div>
                                     </div>
 
@@ -376,8 +538,9 @@ const Register = () => {
                                                 value={formData.password}
                                                 onChange={handleChange}
                                                 placeholder="••••••••••••"
-                                                className="appearance-none relative block w-full px-3 py-3 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                                                className={`appearance-none relative block w-full px-3 py-3 pr-10 border ${errors.password ? 'border-red-500' : 'border-gray-300'} placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm`}
                                             />
+                                            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                                             <button
                                                 type="button"
                                                 className="absolute inset-y-0 right-0 pr-3 flex items-center"
@@ -406,8 +569,9 @@ const Register = () => {
                                                 value={formData.confirmPassword}
                                                 onChange={handleChange}
                                                 placeholder="••••••••••••"
-                                                className="appearance-none relative block w-full px-3 py-3 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                                                className={`appearance-none relative block w-full px-3 py-3 pr-10 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm`}
                                             />
+                                            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
                                             <button
                                                 type="button"
                                                 className="absolute inset-y-0 right-0 pr-3 flex items-center"
@@ -446,16 +610,28 @@ const Register = () => {
 
                                     {/* Create Account Button */}
                                     <div>
-                                        <button
-                                            type="submit"
-                                            disabled={!isFormValid()}
-                                            className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white transition-colors ${isFormValid()
-                                                ? 'bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500'
-                                                : 'bg-gray-300 cursor-not-allowed opacity-50'
-                                                }`}
-                                        >
-                                            Create account
-                                        </button>
+                                        {loading ? (
+                                            <div className="flex justify-center">
+                                                <Triangle
+                                                    visible={true}
+                                                    height="80"
+                                                    width="80"
+                                                    color="#14b8a6"
+                                                    ariaLabel="triangle-loading"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <button
+                                                type="submit"
+                                                disabled={!isFormValid() || loading}
+                                                className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white transition-colors cursor-pointer ${isFormValid() && !loading
+                                                    ? 'bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500'
+                                                    : 'bg-gray-300 cursor-not-allowed opacity-50'
+                                                    }`}
+                                            >
+                                                Create account
+                                            </button>
+                                        )}
                                     </div>
 
                                     {/* Sign In Link */}
@@ -525,7 +701,7 @@ const Register = () => {
                                             to="#"
                                             onClick={(e) => {
                                                 e.preventDefault()
-                                                console.log('Google signup')
+                                                handleGoogleSignUp()
                                             }}
                                         />
 
@@ -553,6 +729,7 @@ const Register = () => {
                 </div>
             </Container>
         </div>
+        </>
     )
 }
 

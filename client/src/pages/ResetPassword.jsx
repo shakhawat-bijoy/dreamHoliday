@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import Slider from 'react-slick'
 import Container from '../components/common/Container'
 import logoImage from '../assets/images/logo.png'
@@ -10,17 +10,20 @@ import banner1 from '../assets/images/banner1.png'
 import banner2 from '../assets/images/banner2.png'
 import banner3 from '../assets/images/banner3.png'
 import Image from '../components/common/Image'
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { auth } from '../firebaseConfig'
+import { Triangle } from 'react-loader-spinner'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const ResetPassword = () => {
     const navigate = useNavigate()
     const [active, setActive] = useState(0)
-    const [step, setStep] = useState(1) // 1: Email, 2: Verify Code, 3: New Password
     const [email, setEmail] = useState('')
-    const [verificationCode, setVerificationCode] = useState('')
-    const [newPassword, setNewPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [showNewPassword, setShowNewPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [errors, setErrors] = useState({
+        email: ''
+    })
 
     const sliderData = [
         {
@@ -55,32 +58,53 @@ const ResetPassword = () => {
         }
     ]
 
-    const handleEmailSubmit = (e) => {
+    const handleEmailSubmit = async (e) => {
         e.preventDefault()
-        console.log('Email submitted:', email)
-        // TODO: Send verification code to email
-        setStep(2)
-    }
 
-    const handleVerifyCode = (e) => {
-        e.preventDefault()
-        console.log('Verification code:', verificationCode)
-        // TODO: Verify code
-        setStep(3)
-    }
-
-    const handleResetPassword = (e) => {
-        e.preventDefault()
-        
-        if (newPassword !== confirmPassword) {
-            alert('Passwords do not match')
+        if (!email.trim()) {
+            setErrors({ ...errors, email: 'Email is required' })
             return
         }
 
-        console.log('Password reset successful')
-        // TODO: Reset password API call
-        navigate('/login')
+        if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/.test(email)) {
+            setErrors({ ...errors, email: 'Invalid email address' })
+            return
+        }
+
+        setLoading(true)
+
+        try {
+            await sendPasswordResetEmail(auth, email)
+            toast.success('Password reset email sent! Please check your inbox.')
+            
+            setTimeout(() => {
+                toast.info('Click the link in your email to reset your password')
+            }, 2000)
+
+            // Clear form after 3 seconds
+            setTimeout(() => {
+                setEmail('')
+                navigate('/login')
+            }, 4000)
+
+        } catch (error) {
+            console.error('Password reset error:', error)
+            
+            if (error.code === 'auth/user-not-found') {
+                setErrors({ ...errors, email: 'No account found with this email' })
+                toast.error('No account found with this email')
+            } else if (error.code === 'auth/invalid-email') {
+                setErrors({ ...errors, email: 'Invalid email address' })
+                toast.error('Invalid email address')
+            } else {
+                toast.error('Failed to send reset email. Please try again.')
+            }
+        } finally {
+            setLoading(false)
+        }
     }
+
+
 
     const sliderSettings = {
         dots: true,
@@ -131,8 +155,21 @@ const ResetPassword = () => {
     };
 
     return (
-        <div className="min-h-screen py-4 md:py-0">
-            <Container>
+        <>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            <div className="min-h-screen py-4 md:py-0">
+                <Container>
                 <div className="min-h-screen flex">
                     {/* Left Side - Slider */}
                     <div className="hidden lg:block relative flex-1 min-h-screen overflow-hidden rounded-3xl">
@@ -182,9 +219,8 @@ const ResetPassword = () => {
                                 Back to login
                             </Link>
 
-                            {/* Step 1: Enter Email */}
-                            {step === 1 && (
-                                <div>
+                            {/* Enter Email */}
+                            <div>
                                     <h2 className="text-3xl font-bold text-gray-900 mb-2">Forgot your password?</h2>
                                     <p className="text-gray-600 mb-8">
                                         Don't worry, happens to all of us. Enter your email below to recover your password
@@ -201,18 +237,35 @@ const ResetPassword = () => {
                                                 type="email"
                                                 required
                                                 value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
+                                                onChange={(e) => {
+                                                    setEmail(e.target.value)
+                                                    setErrors({ ...errors, email: '' })
+                                                }}
                                                 placeholder="john.doe@gmail.com"
-                                                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                                                className={`appearance-none relative block w-full px-3 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm`}
                                             />
+                                            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                                         </div>
 
-                                        <button
-                                            type="submit"
-                                            className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors cursor-pointer"
-                                        >
-                                            Submit
-                                        </button>
+                                        {loading ? (
+                                            <div className="flex justify-center">
+                                                <Triangle
+                                                    visible={true}
+                                                    height="80"
+                                                    width="80"
+                                                    color="#14b8a6"
+                                                    ariaLabel="triangle-loading"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <button
+                                                type="submit"
+                                                disabled={loading}
+                                                className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
+                                            >
+                                                Submit
+                                            </button>
+                                        )}
                                     </form>
 
                                     {/* Divider */}
@@ -247,131 +300,13 @@ const ResetPassword = () => {
                                         </button>
                                     </div>
                                 </div>
-                            )}
 
-                            {/* Step 2: Verify Code */}
-                            {step === 2 && (
-                                <div>
-                                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Verify code</h2>
-                                    <p className="text-gray-600 mb-8">
-                                        An authentication code has been sent to your email
-                                    </p>
-
-                                    <form className="space-y-6" onSubmit={handleVerifyCode}>
-                                        <div>
-                                            <label htmlFor="code" className="block text-sm font-medium text-gray-700 mb-1">
-                                                Enter Code
-                                            </label>
-                                            <input
-                                                id="code"
-                                                name="code"
-                                                type="text"
-                                                required
-                                                value={verificationCode}
-                                                onChange={(e) => setVerificationCode(e.target.value)}
-                                                placeholder="Enter verification code"
-                                                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                                            />
-                                        </div>
-
-                                        <div className="text-sm text-center">
-                                            <span className="text-gray-600">Didn't receive a code? </span>
-                                            <button type="button" className="text-teal-600 hover:text-teal-500 font-medium cursor-pointer">
-                                                Resend
-                                            </button>
-                                        </div>
-
-                                        <button
-                                            type="submit"
-                                            className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors cursor-pointer"
-                                        >
-                                            Verify
-                                        </button>
-                                    </form>
-                                </div>
-                            )}
-
-                            {/* Step 3: Set New Password */}
-                            {step === 3 && (
-                                <div>
-                                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Set a password</h2>
-                                    <p className="text-gray-600 mb-8">
-                                        Your previous password has been reseted. Please set a new password for your account.
-                                    </p>
-
-                                    <form className="space-y-6" onSubmit={handleResetPassword}>
-                                        <div>
-                                            <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                                                Create Password
-                                            </label>
-                                            <div className="relative">
-                                                <input
-                                                    id="newPassword"
-                                                    name="newPassword"
-                                                    type={showNewPassword ? 'text' : 'password'}
-                                                    required
-                                                    value={newPassword}
-                                                    onChange={(e) => setNewPassword(e.target.value)}
-                                                    placeholder="••••••••••••"
-                                                    className="appearance-none relative block w-full px-3 py-3 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                                                    onClick={() => setShowNewPassword(!showNewPassword)}
-                                                >
-                                                    {showNewPassword ? (
-                                                        <EyeOff className="h-5 w-5 text-gray-400" />
-                                                    ) : (
-                                                        <Eye className="h-5 w-5 text-gray-400" />
-                                                    )}
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                                                Re-enter Password
-                                            </label>
-                                            <div className="relative">
-                                                <input
-                                                    id="confirmPassword"
-                                                    name="confirmPassword"
-                                                    type={showConfirmPassword ? 'text' : 'password'}
-                                                    required
-                                                    value={confirmPassword}
-                                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                                    placeholder="••••••••••••"
-                                                    className="appearance-none relative block w-full px-3 py-3 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                                >
-                                                    {showConfirmPassword ? (
-                                                        <EyeOff className="h-5 w-5 text-gray-400" />
-                                                    ) : (
-                                                        <Eye className="h-5 w-5 text-gray-400" />
-                                                    )}
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <button
-                                            type="submit"
-                                            className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors cursor-pointer"
-                                        >
-                                            Set password
-                                        </button>
-                                    </form>
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>
             </Container>
         </div>
+        </>
     )
 }
 
