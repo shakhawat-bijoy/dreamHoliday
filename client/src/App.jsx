@@ -16,6 +16,8 @@ import Flights from './pages/Flights'
 import Hotels from './pages/Hotels'
 import Error from './components/common/Error'
 import ResetPassword from './pages/ResetPassword'
+import Terms from './pages/Terms'
+import PrivecyPolicy from './pages/PrivecyPolicy'
 
 
 const App = () => {
@@ -34,6 +36,8 @@ const App = () => {
         <Route path="/flights" element={<Flights />}></Route>
         <Route path="/hotels" element={<Hotels />}></Route>
         <Route path='/ResetPassword' element={<ResetPassword/>}></Route>
+        <Route path='/terms' element={<Terms/>}></Route>
+        <Route path='/privecy-policy' element={<PrivecyPolicy/>}></Route>
 
 
       </Route>

@@ -7,9 +7,9 @@ const Footer = () => {
     const footerData = {
         destinations: [
             "Payment-Method",
-            "Account",
-            "ResetPassword",
-            "Iceland"
+            "Privecy-Policy",
+            "Terms",
+            "ResetPassword"
         ],
         activities: [
             "Northern Lights",
