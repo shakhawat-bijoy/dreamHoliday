@@ -6,10 +6,10 @@ import logoImage from '../../assets/images/logo.png'
 const Footer = () => {
     const footerData = {
         destinations: [
-            "Payment-Method",
-            "Privecy-Policy",
+            "Payment Method",
+            "Privecy Policy",
             "Terms",
-            "ResetPassword"
+            "Reset Password"
         ],
         activities: [
             "Northern Lights",
