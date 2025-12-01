@@ -1,24 +1,150 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   User, Mail, Phone, MapPin, Calendar, Camera,
   X, Check, CreditCard, History, Settings,
   Edit3, Bell, Shield, Globe, LogOut, Trash2,
-  Plus, Star, Plane, Download, Eye
+  Plus, Star, Plane, Download, Eye, Save
 } from 'lucide-react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router-dom'
+import { onAuthStateChanged, signOut, updateProfile } from 'firebase/auth'
+import { auth } from '../../firebaseConfig'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const Account = () => {
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('profile')
+  const [loading, setLoading] = useState(true)
+  const [editMode, setEditMode] = useState({
+    name: false,
+    phone: false,
+    address: false,
+    dateOfBirth: false
+  })
 
-  // Sample data
-  const userInfo = {
-    name: 'John Anderson',
-    email: 'john.anderson@example.com',
-    phone: '+1 (555) 123-4567',
-    address: '123 Main Street, New York, NY 10001',
-    dateOfBirth: '1990-05-15',
+  // User data from Firebase and database
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    dateOfBirth: '',
     avatar: '',
-    coverImage: ''
+    coverImage: '',
+    uid: ''
+  })
+
+  const [editedInfo, setEditedInfo] = useState({
+    name: '',
+    phone: '',
+    address: '',
+    dateOfBirth: ''
+  })
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        // Fetch user data from Firebase and database
+        try {
+          const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/users/${currentUser.uid}`)
+          
+          const userData = {
+            name: response.data.user?.name || currentUser.displayName || '',
+            email: currentUser.email || '',
+            phone: response.data.user?.phone || '',
+            address: response.data.user?.address || '',
+            dateOfBirth: response.data.user?.dateOfBirth || '',
+            avatar: currentUser.photoURL || '',
+            coverImage: response.data.user?.coverImage || '',
+            uid: currentUser.uid
+          }
+          
+          setUserInfo(userData)
+          setEditedInfo({
+            name: userData.name,
+            phone: userData.phone,
+            address: userData.address,
+            dateOfBirth: userData.dateOfBirth
+          })
+        } catch (error) {
+          console.error('Error fetching user data:', error)
+          // Use Firebase data as fallback
+          setUserInfo({
+            name: currentUser.displayName || '',
+            email: currentUser.email || '',
+            phone: '',
+            address: '',
+            dateOfBirth: '',
+            avatar: currentUser.photoURL || '',
+            coverImage: '',
+            uid: currentUser.uid
+          })
+          setEditedInfo({
+            name: currentUser.displayName || '',
+            phone: '',
+            address: '',
+            dateOfBirth: ''
+          })
+        }
+      }
+      setLoading(false)
+    })
+
+    return () => unsubscribe()
+  }, [])
+
+  const handleEditToggle = (field) => {
+    setEditMode({ ...editMode, [field]: !editMode[field] })
+  }
+
+  const handleInputChange = (field, value) => {
+    setEditedInfo({ ...editedInfo, [field]: value })
+  }
+
+  const handleSave = async (field) => {
+    try {
+      // Update in database
+      await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/users/${userInfo.uid}`, {
+        [field]: editedInfo[field]
+      })
+
+      // Update Firebase profile if name changed
+      if (field === 'name') {
+        await updateProfile(auth.currentUser, {
+          displayName: editedInfo[field]
+        })
+      }
+
+      // Update local state
+      setUserInfo({ ...userInfo, [field]: editedInfo[field] })
+      setEditMode({ ...editMode, [field]: false })
+      toast.success('Profile updated successfully!')
+    } catch (error) {
+      console.error('Error updating profile:', error)
+      toast.error('Failed to update profile')
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth)
+      toast.success('Signed out successfully!')
+      navigate('/')
+    } catch (error) {
+      console.error('Sign out error:', error)
+      toast.error('Failed to sign out')
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading profile...</p>
+        </div>
+      </div>
+    )
   }
 
   const paymentMethods = [
@@ -139,12 +265,45 @@ const Account = () => {
               <User className="w-5 h-5 text-gray-400" />
               <div className="flex-1">
                 <p className="text-sm text-gray-500">Full Name</p>
-                <p className="font-medium text-gray-900 mt-1">{userInfo.name}</p>
+                {editMode.name ? (
+                  <input
+                    type="text"
+                    value={editedInfo.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="font-medium text-gray-900 mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="John Anderson"
+                  />
+                ) : (
+                  <p className="font-medium text-gray-900 mt-1">{userInfo.name || 'Not set'}</p>
+                )}
               </div>
             </div>
-            <button className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1">
-              <Edit3 className="w-4 h-4" /> Edit
-            </button>
+            {editMode.name ? (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleSave('name')}
+                  className="px-4 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 font-medium flex items-center gap-1 rounded-lg cursor-pointer"
+                >
+                  <Save className="w-4 h-4" /> Save
+                </button>
+                <button
+                  onClick={() => {
+                    setEditedInfo({ ...editedInfo, name: userInfo.name })
+                    handleEditToggle('name')
+                  }}
+                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 cursor-pointer"
+                >
+                  <X className="w-4 h-4" /> Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => handleEditToggle('name')}
+                className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1 cursor-pointer"
+              >
+                <Edit3 className="w-4 h-4" /> Edit
+              </button>
+            )}
           </div>
 
           {/* Email */}
@@ -169,12 +328,45 @@ const Account = () => {
               <Phone className="w-5 h-5 text-gray-400" />
               <div className="flex-1">
                 <p className="text-sm text-gray-500">Phone Number</p>
-                <p className="font-medium text-gray-900 mt-1">{userInfo.phone}</p>
+                {editMode.phone ? (
+                  <input
+                    type="tel"
+                    value={editedInfo.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    className="font-medium text-gray-900 mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="+1 (555) 123-4567"
+                  />
+                ) : (
+                  <p className="font-medium text-gray-900 mt-1">{userInfo.phone || 'Not set'}</p>
+                )}
               </div>
             </div>
-            <button className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1">
-              <Edit3 className="w-4 h-4" /> Edit
-            </button>
+            {editMode.phone ? (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleSave('phone')}
+                  className="px-4 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 font-medium flex items-center gap-1 rounded-lg cursor-pointer"
+                >
+                  <Save className="w-4 h-4" /> Save
+                </button>
+                <button
+                  onClick={() => {
+                    setEditedInfo({ ...editedInfo, phone: userInfo.phone })
+                    handleEditToggle('phone')
+                  }}
+                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 cursor-pointer"
+                >
+                  <X className="w-4 h-4" /> Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => handleEditToggle('phone')}
+                className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1 cursor-pointer"
+              >
+                <Edit3 className="w-4 h-4" /> Edit
+              </button>
+            )}
           </div>
 
           {/* Address */}
@@ -183,12 +375,45 @@ const Account = () => {
               <MapPin className="w-5 h-5 text-gray-400" />
               <div className="flex-1">
                 <p className="text-sm text-gray-500">Address</p>
-                <p className="font-medium text-gray-900 mt-1">{userInfo.address}</p>
+                {editMode.address ? (
+                  <input
+                    type="text"
+                    value={editedInfo.address}
+                    onChange={(e) => handleInputChange('address', e.target.value)}
+                    className="font-medium text-gray-900 mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="123 Main Street, New York, NY 10001"
+                  />
+                ) : (
+                  <p className="font-medium text-gray-900 mt-1">{userInfo.address || 'Not set'}</p>
+                )}
               </div>
             </div>
-            <button className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1">
-              <Edit3 className="w-4 h-4" /> Edit
-            </button>
+            {editMode.address ? (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleSave('address')}
+                  className="px-4 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 font-medium flex items-center gap-1 rounded-lg cursor-pointer"
+                >
+                  <Save className="w-4 h-4" /> Save
+                </button>
+                <button
+                  onClick={() => {
+                    setEditedInfo({ ...editedInfo, address: userInfo.address })
+                    handleEditToggle('address')
+                  }}
+                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 cursor-pointer"
+                >
+                  <X className="w-4 h-4" /> Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => handleEditToggle('address')}
+                className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1 cursor-pointer"
+              >
+                <Edit3 className="w-4 h-4" /> Edit
+              </button>
+            )}
           </div>
 
           {/* DOB */}
@@ -197,12 +422,50 @@ const Account = () => {
               <Calendar className="w-5 h-5 text-gray-400" />
               <div className="flex-1">
                 <p className="text-sm text-gray-500">Date of Birth</p>
-                <p className="font-medium text-gray-900 mt-1">May 15, 1990</p>
+                {editMode.dateOfBirth ? (
+                  <input
+                    type="date"
+                    value={editedInfo.dateOfBirth}
+                    onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
+                    className="font-medium text-gray-900 mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  />
+                ) : (
+                  <p className="font-medium text-gray-900 mt-1">
+                    {userInfo.dateOfBirth ? new Date(userInfo.dateOfBirth).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    }) : 'Not set'}
+                  </p>
+                )}
               </div>
             </div>
-            <button className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1">
-              <Edit3 className="w-4 h-4" /> Edit
-            </button>
+            {editMode.dateOfBirth ? (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleSave('dateOfBirth')}
+                  className="px-4 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 font-medium flex items-center gap-1 rounded-lg cursor-pointer"
+                >
+                  <Save className="w-4 h-4" /> Save
+                </button>
+                <button
+                  onClick={() => {
+                    setEditedInfo({ ...editedInfo, dateOfBirth: userInfo.dateOfBirth })
+                    handleEditToggle('dateOfBirth')
+                  }}
+                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 cursor-pointer"
+                >
+                  <X className="w-4 h-4" /> Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => handleEditToggle('dateOfBirth')}
+                className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1 cursor-pointer"
+              >
+                <Edit3 className="w-4 h-4" /> Edit
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -460,7 +723,10 @@ const Account = () => {
         <h2 className="text-xl font-semibold text-gray-900 mb-6">Danger Zone</h2>
 
         <div className="space-y-4">
-          <button className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors font-medium">
+          <button
+            onClick={handleSignOut}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors font-medium cursor-pointer"
+          >
             <LogOut className="w-5 h-5" />
             Sign Out
           </button>
