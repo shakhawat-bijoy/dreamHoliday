@@ -3,7 +3,7 @@ import {
   User, Mail, Phone, MapPin, Calendar, Camera,
   X, Check, CreditCard, History, Settings,
   Edit3, Bell, Shield, Globe, LogOut, Trash2,
-  Plus, Star, Plane, Download, Eye, Save
+  Plus, Star, Plane, Download, Eye
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { onAuthStateChanged, signOut, updateProfile } from 'firebase/auth'
@@ -205,10 +205,10 @@ const Account = () => {
   const renderProfileContent = () => (
     <div className="space-y-8">
       <div className="relative">
-        <div className="h-96 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-xl">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent"></div>
+        <div className="h-52 lg:h-96 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-xl">
+          <div className="absolute inset-0 bg-gradient-to-tz from-black/30 via-transparent"></div>
 
-          <button className="absolute top-6 right-6 bg-white/95 hover:bg-white text-gray-800 px-5 py-2.5 rounded-xl font-medium transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl backdrop-blur-sm">
+          <button className="absolute top-6 right-6 bg-white/95 hover:bg-white text-gray-800 px-5 py-2.5 rounded-xl font-medium text-sm lg:text-base transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl backdrop-blur-sm">
             <Camera className="w-4 h-4" />
             Upload Cover
           </button>
@@ -227,8 +227,8 @@ const Account = () => {
               </div>
             </div>
 
-            <div className="z-10 absolute lg:left-52 left-40 top-100 max-w-[70%]">
-              <h1 className="text-2xl md:text-4xl font-bold text-black tracking-wider">
+            <div className="z-10 absolute lg:left-52 left-40 lg:top-100 top-56 max-w-[70%]">
+              <h1 className="text-xl md:text-4xl font-bold text-black tracking-wider">
                 {userInfo.name}
               </h1>
             </div>
@@ -244,7 +244,7 @@ const Account = () => {
           <div className="flex items-center justify-between py-4 border-b border-gray-100">
             <div className="flex items-center space-x-4 flex-1">
               <User className="w-5 h-5 text-gray-400" />
-              <div className="flex-1">
+              <div className="flex-1 mr-2">
                 <p className="text-sm text-gray-500">Full Name</p>
                 {editMode.name ? (
                   <input
@@ -260,29 +260,32 @@ const Account = () => {
               </div>
             </div>
             {editMode.name ? (
-              <div className="flex gap-2">
+              <div className="flex gap-2 self-end mb-1">
                 <button
                   onClick={() => handleSave('name')}
-                  className="px-4 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 font-medium flex items-center gap-1 rounded-lg cursor-pointer"
+                  className="p-2 text-white bg-teal-600 hover:bg-teal-700 rounded-lg cursor-pointer transition-colors"
+                  title="Save"
                 >
-                  <Save className="w-4 h-4" /> Save
+                  <Check className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => {
                     setEditedInfo({ ...editedInfo, name: userInfo.name })
                     handleEditToggle('name')
                   }}
-                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 cursor-pointer"
+                  className="p-2 text-gray-600 hover:text-gray-700 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors"
+                  title="Cancel"
                 >
-                  <X className="w-4 h-4" /> Cancel
+                  <X className="w-5 h-5" />
                 </button>
               </div>
             ) : (
               <button
                 onClick={() => handleEditToggle('name')}
-                className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1 cursor-pointer"
+                className="p-2 text-teal-600 hover:text-teal-700 hover:bg-teal-50 rounded-lg cursor-pointer transition-colors self-end mb-1"
+                title="Edit"
               >
-                <Edit3 className="w-4 h-4" /> Edit
+                <Edit3 className="w-5 h-5" />
               </button>
             )}
           </div>
@@ -291,7 +294,7 @@ const Account = () => {
           <div className="flex items-center justify-between py-4 border-b border-gray-100">
             <div className="flex items-center space-x-4 flex-1">
               <Mail className="w-5 h-5 text-gray-400" />
-              <div className="flex-1">
+              <div className="flex-1 mr-2">
                 <p className="text-sm text-gray-500">Email Address</p>
                 <div className="flex items-center gap-2 mt-1">
                   <p className="font-medium text-gray-900">{userInfo.email}</p>
@@ -307,7 +310,7 @@ const Account = () => {
           <div className="flex items-center justify-between py-4 border-b border-gray-100">
             <div className="flex items-center space-x-4 flex-1">
               <Phone className="w-5 h-5 text-gray-400" />
-              <div className="flex-1">
+              <div className="flex-1 mr-2">
                 <p className="text-sm text-gray-500">Phone Number</p>
                 {editMode.phone ? (
                   <input
@@ -323,29 +326,32 @@ const Account = () => {
               </div>
             </div>
             {editMode.phone ? (
-              <div className="flex gap-2">
+              <div className="flex gap-2 self-end mb-1">
                 <button
                   onClick={() => handleSave('phone')}
-                  className="px-4 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 font-medium flex items-center gap-1 rounded-lg cursor-pointer"
+                  className="p-2 text-white bg-teal-600 hover:bg-teal-700 rounded-lg cursor-pointer transition-colors"
+                  title="Save"
                 >
-                  <Save className="w-4 h-4" /> Save
+                  <Check className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => {
                     setEditedInfo({ ...editedInfo, phone: userInfo.phone })
                     handleEditToggle('phone')
                   }}
-                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 cursor-pointer"
+                  className="p-2 text-gray-600 hover:text-gray-700 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors"
+                  title="Cancel"
                 >
-                  <X className="w-4 h-4" /> Cancel
+                  <X className="w-5 h-5" />
                 </button>
               </div>
             ) : (
               <button
                 onClick={() => handleEditToggle('phone')}
-                className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1 cursor-pointer"
+                className="p-2 text-teal-600 hover:text-teal-700 hover:bg-teal-50 rounded-lg cursor-pointer transition-colors self-end mb-1"
+                title="Edit"
               >
-                <Edit3 className="w-4 h-4" /> Edit
+                <Edit3 className="w-5 h-5" />
               </button>
             )}
           </div>
@@ -354,7 +360,7 @@ const Account = () => {
           <div className="flex items-center justify-between py-4 border-b border-gray-100">
             <div className="flex items-center space-x-4 flex-1">
               <MapPin className="w-5 h-5 text-gray-400" />
-              <div className="flex-1">
+              <div className="flex-1 mr-2">
                 <p className="text-sm text-gray-500">Address</p>
                 {editMode.address ? (
                   <input
@@ -370,29 +376,32 @@ const Account = () => {
               </div>
             </div>
             {editMode.address ? (
-              <div className="flex gap-2">
+              <div className="flex gap-2 self-end mb-1">
                 <button
                   onClick={() => handleSave('address')}
-                  className="px-4 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 font-medium flex items-center gap-1 rounded-lg cursor-pointer"
+                  className="p-2 text-white bg-teal-600 hover:bg-teal-700 rounded-lg cursor-pointer transition-colors"
+                  title="Save"
                 >
-                  <Save className="w-4 h-4" /> Save
+                  <Check className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => {
                     setEditedInfo({ ...editedInfo, address: userInfo.address })
                     handleEditToggle('address')
                   }}
-                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 cursor-pointer"
+                  className="p-2 text-gray-600 hover:text-gray-700 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors"
+                  title="Cancel"
                 >
-                  <X className="w-4 h-4" /> Cancel
+                  <X className="w-5 h-5" />
                 </button>
               </div>
             ) : (
               <button
                 onClick={() => handleEditToggle('address')}
-                className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1 cursor-pointer"
+                className="p-2 text-teal-600 hover:text-teal-700 hover:bg-teal-50 rounded-lg cursor-pointer transition-colors self-end mb-1"
+                title="Edit"
               >
-                <Edit3 className="w-4 h-4" /> Edit
+                <Edit3 className="w-5 h-5" />
               </button>
             )}
           </div>
@@ -401,7 +410,7 @@ const Account = () => {
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center space-x-4 flex-1">
               <Calendar className="w-5 h-5 text-gray-400" />
-              <div className="flex-1">
+              <div className="flex-1 mr-2">
                 <p className="text-sm text-gray-500">Date of Birth</p>
                 {editMode.dateOfBirth ? (
                   <input
@@ -422,29 +431,32 @@ const Account = () => {
               </div>
             </div>
             {editMode.dateOfBirth ? (
-              <div className="flex gap-2">
+              <div className="flex gap-2 self-end mb-1">
                 <button
                   onClick={() => handleSave('dateOfBirth')}
-                  className="px-4 py-2 text-sm text-white bg-teal-600 hover:bg-teal-700 font-medium flex items-center gap-1 rounded-lg cursor-pointer"
+                  className="p-2 text-white bg-teal-600 hover:bg-teal-700 rounded-lg cursor-pointer transition-colors"
+                  title="Save"
                 >
-                  <Save className="w-4 h-4" /> Save
+                  <Check className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => {
                     setEditedInfo({ ...editedInfo, dateOfBirth: userInfo.dateOfBirth })
                     handleEditToggle('dateOfBirth')
                   }}
-                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-700 font-medium flex items-center gap-1 cursor-pointer"
+                  className="p-2 text-gray-600 hover:text-gray-700 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors"
+                  title="Cancel"
                 >
-                  <X className="w-4 h-4" /> Cancel
+                  <X className="w-5 h-5" />
                 </button>
               </div>
             ) : (
               <button
                 onClick={() => handleEditToggle('dateOfBirth')}
-                className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1 cursor-pointer"
+                className="p-2 text-teal-600 hover:text-teal-700 hover:bg-teal-50 rounded-lg cursor-pointer transition-colors"
+                title="Edit"
               >
-                <Edit3 className="w-4 h-4" /> Edit
+                <Edit3 className="w-5 h-5" />
               </button>
             )}
           </div>

@@ -188,7 +188,7 @@ const Register = () => {
             // Navigate to login after 2 seconds
             setTimeout(() => {
                 navigate('/login')
-            }, 2000)
+            }, 1000)
 
         } catch (error) {
             console.error('Registration error:', error)
