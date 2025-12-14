@@ -10,10 +10,10 @@ import { onAuthStateChanged, signOut, updateProfile } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 import { toast } from 'react-toastify'
 import Image from '../common/Image'
+import profileVideoSrc from '../../../public/bijoy.mp4'
 
 const Account = () => {
-  const profileGifSrc = `${import.meta.env.BASE_URL}bijoy.gif`
-  const profileVideoSrc = `${import.meta.env.BASE_URL}bijoy.mp4`
+
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('profile')
   const [loading, setLoading] = useState(true)
