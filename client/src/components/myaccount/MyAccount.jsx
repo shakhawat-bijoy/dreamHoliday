@@ -222,7 +222,9 @@ const Account = () => {
                 <div className="w-32 lg:w-52 h-32 lg:h-52 rounded-full bg-white shadow-2xl ring-4 ring-white overflow-hidden">
                   <video
                     src={profileVideoSrc}
-                    poster={profileGifSrc}
+                    autoPlay
+                    muted
+                    loop
                     controls={false}
                     playsInline
                     className="w-full h-full object-cover rounded-full"
