@@ -18,6 +18,8 @@ import Error from './components/common/Error'
 import ResetPassword from './pages/ResetPassword'
 import Terms from './pages/Terms'
 import PrivecyPolicy from './pages/PrivecyPolicy'
+import PackageDetails from './pages/PackageDetails'
+import AllPackages from './pages/AllPackages'
 
 
 const App = () => {
@@ -38,6 +40,8 @@ const App = () => {
         <Route path='/Reset-Password' element={<ResetPassword/>}></Route>
         <Route path='/terms' element={<Terms/>}></Route>
         <Route path='/privecy-policy' element={<PrivecyPolicy/>}></Route>
+        <Route path='/packages' element={<AllPackages/>}></Route>
+        <Route path='/packages/:id' element={<PackageDetails/>}></Route>
 
 
       </Route>

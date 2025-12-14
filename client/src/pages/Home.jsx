@@ -2,6 +2,7 @@ import React from 'react'
 import Banner from '../components/home/Banner'
 import FlightSearch from '../components/home/FlightHotelSearch'
 import TripPlan from '../components/home/TripPlan'
+import Packages from '../components/home/Packages'
 import FlightHotelCard from '../components/home/FlightHotelCard'
 import Reviews from '../components/home/Reviews'
 
@@ -11,6 +12,7 @@ const Home = () => {
         <Banner className='md:relative static'/>
         <FlightSearch className='static md:absolute md:top-1/2 md:left-1/2 md:translate-x-[-50%] md:translate-y-[15%]'/>
         <TripPlan className={'md:mt-[360px]'}/>
+        <Packages className='bg-slate-50'/>
         <FlightHotelCard/>
         <Reviews className={`hidden md:block`}/>
     </div>
