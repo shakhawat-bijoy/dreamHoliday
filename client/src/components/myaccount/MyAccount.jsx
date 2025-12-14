@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { onAuthStateChanged, signOut, updateProfile } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 import { toast } from 'react-toastify'
+import Image from '../common/Image'
 
 const Account = () => {
   const navigate = useNavigate()
@@ -206,9 +207,9 @@ const Account = () => {
     <div className="space-y-8">
       <div className="relative">
         <div className="h-52 lg:h-96 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-xl">
-          <div className="absolute inset-0 bg-gradient-to-tz from-black/30 via-transparent"></div>
+          <Image src={'https://ik.imagekit.io/abpj7jifz/G0010808.JPG'} alt="Cover Image" className="w-full h-full object-cover" />
 
-          <button className="absolute top-6 right-6 bg-white/95 hover:bg-white text-gray-800 px-5 py-2.5 rounded-xl font-medium text-sm lg:text-base transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl backdrop-blur-sm">
+          <button className="absolute lg:top-6 lg:right-6 top-2 right-2 bg-white/35 hover:bg-white text-gray-900 lg:px-5 px-2.5 lg:py-2.5 py-1.5 lg:rounded-xl rounded-md font-medium text-sm lg:text-base transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl backdrop-blur-sm">
             <Camera className="w-4 h-4" />
             Upload Cover
           </button>
@@ -216,10 +217,12 @@ const Account = () => {
           <div className="flex items-center gap-5 flex-wrap sm:flex-nowrap">
             <div className="absolute -bottom-20 left-4 sm:left-8">
               <div className="relative">
-                <div className="w-32 sm:w-40 h-32 sm:h-40 rounded-full bg-white p-1.5 shadow-2xl ring-1 ring-white">
-                  <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                <div className="w-32 lg:w-52 h-32 lg:h-52 rounded-full bg-white shadow-2xl ring-4 ring-white">
+                  {/* <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                     <User className="w-12 sm:w-16 h-12 sm:h-16 text-gray-400" />
-                  </div>
+                  </div> */}
+
+                  <Image src={'/bijoy.gif'} alt="Profile Image" className="w-full h-full object-cover rounded-full" />
                 </div>
                 <button className="absolute bottom-2 right-2 w-10 sm:w-12 h-10 sm:h-12 bg-teal-500 hover:bg-teal-600 rounded-full flex items-center justify-center text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
                   <Camera className="w-5 sm:w-6 h-5 sm:h-6" />
@@ -227,7 +230,7 @@ const Account = () => {
               </div>
             </div>
 
-            <div className="z-10 absolute lg:left-52 left-40 lg:top-100 top-56 max-w-[70%]">
+            <div className="z-10 absolute lg:left-64 left-40 lg:top-98 top-56 max-w-[70%]">
               <h1 className="text-xl md:text-4xl font-bold text-black tracking-wider">
                 {userInfo.name}
               </h1>
@@ -479,7 +482,7 @@ const Account = () => {
           </div>
 
           <Link to="/payment-method">
-            <button className="flex items-center gap-2 px-6 py-3 bg-teal-500 text-white rounded-xl hover:bg-teal-600 transition-all duration-300 shadow-lg hover:shadow-xl font-medium">
+            <button className="flex items-center lg:gap-2 gap-0.5 lg:px-6 lg:py-3 px-3 py-1.5 bg-teal-500 text-white rounded-xl hover:bg-teal-600 transition-all duration-300 shadow-lg hover:shadow-xl font-medium lg:text-2xl text-sm">
               <Plus className="w-5 h-5" /> Add Card
             </button>
           </Link>
@@ -667,7 +670,7 @@ const Account = () => {
 
         <div className="space-y-4">
 
-          <div className="flex items-center justify-between py-3 border-b border-gray-100">
+          <div className="flex items-center justify-between py-3 border-b border-gray-100 mr-4">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 text-gray-400" />
               <div>
@@ -678,7 +681,7 @@ const Account = () => {
 
             <label className="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" className="sr-only peer" defaultChecked />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-500"></div>
+              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
             </label>
           </div>
 
@@ -690,7 +693,7 @@ const Account = () => {
                 <p className="text-sm text-gray-500">Add an extra layer of security</p>
               </div>
             </div>
-            <button className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium">
+            <button className="px-4 py-2 text-sm text-gray-300 font-medium">
               Enable
             </button>
           </div>
@@ -704,7 +707,7 @@ const Account = () => {
               </div>
             </div>
 
-            <button className="px-4 py-2 text-sm text-teal-600 hover:text-teal-700 font-medium">
+            <button className="px-4 py-2 text-sm text-gray-300 font-medium">
               Change
             </button>
           </div>
