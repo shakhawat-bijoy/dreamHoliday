@@ -35,182 +35,124 @@ const Terms = () => {
               <FileText className="w-8 h-8 text-teal-600" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Terms of Service</h1>
-            <p className="text-gray-600">Last updated: December 1, 2024</p>
+            <p className="text-gray-600">Last updated: December 15, 2025</p>
           </div>
 
-          {/* Introduction */}
           <div className="prose max-w-none mb-8">
             <p className="text-lg text-gray-700 leading-relaxed">
-              Welcome to Dream Holidays! These Terms of Service govern your use of our platform and services. By accessing or using Dream Holidays, you agree to be bound by these terms.
+              Welcome to Dream Holidays. These Terms of Service form a contract between you and Dream Holidays. By creating an account, making a booking, or using our site or apps, you agree to these terms and our Privacy Policy. If you do not agree, do not use our services.
             </p>
           </div>
 
           {/* Sections */}
           <div className="space-y-8">
-            {/* Acceptance of Terms */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <CheckCircle className="w-6 h-6 text-teal-600" />
-                <h2 className="text-2xl font-bold text-gray-900">1. Acceptance of Terms</h2>
+                <h2 className="text-2xl font-bold text-gray-900">1. Who We Are</h2>
               </div>
               <p className="text-gray-700">
-                By creating an account or using our services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree, please do not use our services.
+                Dream Holidays is an online platform that lets you search, compare, and book travel services offered by airlines, hotels, tour operators, and other third-party providers.
               </p>
             </section>
 
-            {/* User Accounts */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <CheckCircle className="w-6 h-6 text-teal-600" />
-                <h2 className="text-2xl font-bold text-gray-900">2. User Accounts</h2>
+                <h2 className="text-2xl font-bold text-gray-900">2. Using Dream Holidays</h2>
               </div>
-              <div className="space-y-4 text-gray-700">
-                <p><strong>Account Creation:</strong></p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>You must be at least 18 years old to create an account</li>
-                  <li>You must provide accurate and complete information</li>
-                  <li>You are responsible for maintaining account security</li>
-                  <li>You must not share your account credentials</li>
-                </ul>
-                <p className="mt-4"><strong>Account Termination:</strong></p>
-                <p>We reserve the right to suspend or terminate accounts that violate these terms or engage in fraudulent activities.</p>
+              <div className="space-y-3 text-gray-700">
+                <p><strong>Eligibility:</strong> You must be at least 18 and able to form a binding contract.</p>
+                <p><strong>Your account:</strong> Provide accurate details, keep credentials confidential, and promptly notify us of any unauthorized use. We may suspend or close accounts for misuse, fraud, or policy violations.</p>
+                <p><strong>Accuracy:</strong> Review all booking details before paying. Prices, availability, and restrictions come from the provider and may change until confirmed.</p>
               </div>
             </section>
 
-            {/* Booking and Payments */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <CreditCard className="w-6 h-6 text-teal-600" />
-                <h2 className="text-2xl font-bold text-gray-900">3. Booking and Payments</h2>
+                <h2 className="text-2xl font-bold text-gray-900">3. Bookings and Payments</h2>
               </div>
-              <div className="space-y-4 text-gray-700">
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">Booking Process</h3>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>All bookings are subject to availability</li>
-                    <li>Prices are displayed in USD unless otherwise stated</li>
-                    <li>Booking confirmation will be sent via email</li>
-                    <li>You must review all booking details before confirming</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">Payment Terms</h3>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Payment is required at the time of booking</li>
-                    <li>We accept major credit cards and secure payment methods</li>
-                    <li>All payments are processed through secure third-party providers</li>
-                    <li>Additional fees may apply (taxes, service charges)</li>
-                  </ul>
-                </div>
+              <div className="space-y-3 text-gray-700">
+                <p><strong>Process:</strong> Bookings are placed on behalf of the provider. A confirmation email shows the applicable provider terms.</p>
+                <p><strong>Charges:</strong> You authorize us and our payment partners to charge the amount shown at checkout, which may include taxes, fees, or surcharges. Currency and pricing are shown at checkout.</p>
+                <p><strong>Fraud checks:</strong> We may decline or cancel a booking if payment cannot be verified or fraud is suspected.</p>
               </div>
             </section>
 
-            {/* Cancellation and Refunds */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <XCircle className="w-6 h-6 text-teal-600" />
-                <h2 className="text-2xl font-bold text-gray-900">4. Cancellation and Refunds</h2>
+                <h2 className="text-2xl font-bold text-gray-900">4. Cancellations, Changes, and Refunds</h2>
               </div>
-              <div className="space-y-4 text-gray-700">
-                <p><strong>Cancellation Policy:</strong></p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Cancellation policies vary by service provider (airline, hotel, etc.)</li>
-                  <li>Cancellation fees may apply based on timing and provider policies</li>
-                  <li>Some bookings may be non-refundable</li>
-                  <li>Cancellation requests must be submitted through your account</li>
-                </ul>
-                <p className="mt-4"><strong>Refund Processing:</strong></p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Refunds are processed within 7-14 business days</li>
-                  <li>Refund amount depends on provider policies and timing</li>
-                  <li>Processing fees may be non-refundable</li>
-                </ul>
+              <div className="space-y-3 text-gray-700">
+                <p><strong>Provider rules:</strong> Each provider sets its own change and cancellation terms (including non-refundable fares or rooms). Those terms apply to your booking.</p>
+                <p><strong>Our role:</strong> We help submit your request to the provider but cannot guarantee approval. Fees may apply.</p>
+                <p><strong>Refund timing:</strong> Approved refunds are typically processed within 7-14 business days through the original payment method, subject to provider and bank timelines.</p>
               </div>
             </section>
 
-            {/* User Conduct */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <AlertTriangle className="w-6 h-6 text-teal-600" />
-                <h2 className="text-2xl font-bold text-gray-900">5. User Conduct</h2>
+                <h2 className="text-2xl font-bold text-gray-900">5. Your Responsibilities</h2>
               </div>
-              <p className="text-gray-700 mb-4">You agree not to:</p>
               <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                <li>Use the platform for any illegal or unauthorized purpose</li>
-                <li>Violate any laws or regulations</li>
-                <li>Impersonate another person or entity</li>
-                <li>Transmit viruses, malware, or harmful code</li>
-                <li>Attempt to gain unauthorized access to our systems</li>
-                <li>Scrape, copy, or misuse our content</li>
-                <li>Engage in fraudulent activities</li>
+                <li>Use the service lawfully and for personal, non-commercial travel planning.</li>
+                <li>Provide accurate traveler details and comply with passport, visa, health, and entry requirements.</li>
+                <li>Avoid introducing malware, scraping, reverse engineering, or attempting unauthorized access.</li>
+                <li>Do not misrepresent identities, submit fraudulent payments, or resell inventory.</li>
               </ul>
             </section>
 
-            {/* Intellectual Property */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <Scale className="w-6 h-6 text-teal-600" />
                 <h2 className="text-2xl font-bold text-gray-900">6. Intellectual Property</h2>
               </div>
               <p className="text-gray-700">
-                All content on Dream Holidays, including text, graphics, logos, images, and software, is the property of Dream Holidays or its licensors and is protected by copyright and trademark laws. You may not reproduce, distribute, or create derivative works without our written permission.
+                Dream Holidays content (brand, design, text, graphics, software) is owned by us or our licensors. You may use it only for personal travel planning. Do not copy, distribute, or create derivative works without permission.
               </p>
             </section>
 
-            {/* Limitation of Liability */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <AlertTriangle className="w-6 h-6 text-teal-600" />
-                <h2 className="text-2xl font-bold text-gray-900">7. Limitation of Liability</h2>
+                <h2 className="text-2xl font-bold text-gray-900">7. Disclaimers and Liability</h2>
               </div>
-              <div className="space-y-4 text-gray-700">
-                <p>
-                  Dream Holidays acts as an intermediary between you and service providers (airlines, hotels, tour operators). We are not responsible for:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Quality of services provided by third parties</li>
-                  <li>Flight delays, cancellations, or schedule changes</li>
-                  <li>Hotel accommodations or amenities</li>
-                  <li>Lost luggage or personal belongings</li>
-                  <li>Travel disruptions due to weather, natural disasters, or other events</li>
-                </ul>
-                <p className="mt-4">
-                  To the maximum extent permitted by law, Dream Holidays shall not be liable for any indirect, incidental, special, or consequential damages.
-                </p>
+              <div className="space-y-3 text-gray-700">
+                <p><strong>Provider responsibility:</strong> Travel services are provided by third parties. They are responsible for delivery, quality, safety, schedules, and compliance. We are not a carrier, hotel, or tour operator.</p>
+                <p><strong>No warranties:</strong> Services are provided “as is” without warranties. Availability and pricing may change.</p>
+                <p><strong>Limitation:</strong> To the maximum extent permitted by law, we are not liable for indirect, incidental, special, or consequential damages. Our total liability related to a booking is capped at the amount you paid for that booking.</p>
               </div>
             </section>
 
-            {/* Dispute Resolution */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <Scale className="w-6 h-6 text-teal-600" />
                 <h2 className="text-2xl font-bold text-gray-900">8. Dispute Resolution</h2>
               </div>
               <p className="text-gray-700">
-                Any disputes arising from these terms or your use of our services shall be resolved through binding arbitration in accordance with the laws of the State of New York. You waive your right to participate in class action lawsuits.
+                You agree to first contact us to resolve disputes. If unresolved, disputes will be handled by binding arbitration on an individual basis under the rules of the state or country where you reside, unless local law requires a different forum. You waive class actions to the extent permitted by law.
               </p>
             </section>
 
-            {/* Changes to Terms */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <FileText className="w-6 h-6 text-teal-600" />
-                <h2 className="text-2xl font-bold text-gray-900">9. Changes to Terms</h2>
+                <h2 className="text-2xl font-bold text-gray-900">9. Changes to These Terms</h2>
               </div>
               <p className="text-gray-700">
-                We reserve the right to modify these Terms of Service at any time. We will notify users of significant changes via email or platform notification. Continued use of our services after changes constitutes acceptance of the new terms.
+                We may update these terms to reflect legal, operational, or product changes. We will post the updated date and, where required, notify you. Continued use after changes means you accept the updated terms.
               </p>
             </section>
 
-            {/* Contact Information */}
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <CheckCircle className="w-6 h-6 text-teal-600" />
-                <h2 className="text-2xl font-bold text-gray-900">10. Contact Us</h2>
+                <h2 className="text-2xl font-bold text-gray-900">10. Contact</h2>
               </div>
-              <p className="text-gray-700 mb-4">
-                If you have questions about these Terms of Service, please contact us:
-              </p>
+              <p className="text-gray-700 mb-4">Questions about these Terms of Service?</p>
               <div className="p-4 bg-gray-50 rounded-lg">
                 <p className="text-gray-700"><strong>Email:</strong> legal@dreamholidays.com</p>
                 <p className="text-gray-700"><strong>Phone:</strong> +1 (555) 123-4567</p>
