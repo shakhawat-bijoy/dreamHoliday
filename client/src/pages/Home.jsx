@@ -12,7 +12,7 @@ const Home = () => {
         <Banner className='md:relative static'/>
         <FlightSearch className='static md:absolute md:top-1/2 md:left-1/2 md:translate-x-[-50%] md:translate-y-[15%]'/>
         <TripPlan className={'md:mt-[360px]'}/>
-        <Packages className='bg-slate-50'/>
+        <Packages className=''/>
         <FlightHotelCard/>
         <Reviews className={`hidden md:block`}/>
     </div>

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { MapPin, Clock3, Star, ArrowLeft, CheckCircle2, Calendar, Users, XCircle } from 'lucide-react'
 import Container from '../components/common/Container'
 import Image from '../components/common/Image'
+import Button from '../components/common/Button'
 import { getPackageById } from '../utils/packagesData'
 
 const formatCurrency = (value) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value)
@@ -24,8 +25,8 @@ const PackageDetails = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Package not found</h1>
           <p className="text-gray-600">We could not locate that package. Please return to the packages list.</p>
           <div className="flex justify-center gap-3">
-            <a href="/" className="bg-teal-600 text-white px-4 py-2 rounded-lg font-semibold">Back to home</a>
-            <a href="/packages" className="bg-white border border-teal-500 text-gray-900 px-4 py-2 rounded-lg font-semibold">All packages</a>
+            <Button to="/" className="bg-teal-600 text-white px-4 py-2 rounded-lg font-semibold">Back to home</Button>
+            <Button to="/packages" className="bg-white border border-teal-500 text-gray-900 px-4 py-2 rounded-lg font-semibold">All packages</Button>
           </div>
         </div>
       </Container>
