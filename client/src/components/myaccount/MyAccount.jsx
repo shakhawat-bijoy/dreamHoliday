@@ -13,6 +13,7 @@ import Image from '../common/Image'
 
 const Account = () => {
   const profileGifSrc = `${import.meta.env.BASE_URL}bijoy.gif`
+  const profileVideoSrc = `${import.meta.env.BASE_URL}bijoy.mp4`
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('profile')
   const [loading, setLoading] = useState(true)
@@ -219,11 +220,13 @@ const Account = () => {
             <div className="absolute -bottom-20 left-4 sm:left-8">
               <div className="relative">
                 <div className="w-32 lg:w-52 h-32 lg:h-52 rounded-full bg-white shadow-2xl ring-4 ring-white overflow-hidden">
-                  {/* <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                    <User className="w-12 sm:w-16 h-12 sm:h-16 text-gray-400" />
-                  </div> */}
-
-                  <Image src={profileGifSrc} alt="Profile Image" className="w-full h-full object-cover rounded-full" />
+                  <video
+                    src={profileVideoSrc}
+                    poster={profileGifSrc}
+                    controls={false}
+                    playsInline
+                    className="w-full h-full object-cover rounded-full"
+                  />
                 </div>
                 <button className="absolute bottom-2 right-2 w-10 sm:w-12 h-10 sm:h-12 bg-teal-500 hover:bg-teal-600 rounded-full flex items-center justify-center text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
                   <Camera className="w-5 sm:w-6 h-5 sm:h-6" />
