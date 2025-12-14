@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 import Image from '../common/Image'
 
 const Account = () => {
+  const profileGifSrc = `${import.meta.env.BASE_URL}bijoy.gif`
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('profile')
   const [loading, setLoading] = useState(true)
@@ -55,7 +56,7 @@ const Account = () => {
           coverImage: '',
           uid: currentUser.uid
         }
-        
+
         setUserInfo(userData)
         setEditedInfo({
           name: userData.name,
@@ -83,15 +84,15 @@ const Account = () => {
       // Update Firebase profile
       if (auth.currentUser) {
         const updates = {}
-        
+
         if (field === 'name') {
           updates.displayName = editedInfo[field]
         }
-        
+
         if (field === 'phone') {
           updates.phoneNumber = editedInfo[field]
         }
-        
+
         if (Object.keys(updates).length > 0) {
           await updateProfile(auth.currentUser, updates)
         }
@@ -217,12 +218,12 @@ const Account = () => {
           <div className="flex items-center gap-5 flex-wrap sm:flex-nowrap">
             <div className="absolute -bottom-20 left-4 sm:left-8">
               <div className="relative">
-                <div className="w-32 lg:w-52 h-32 lg:h-52 rounded-full bg-white shadow-2xl ring-4 ring-white">
+                <div className="w-32 lg:w-52 h-32 lg:h-52 rounded-full bg-white shadow-2xl ring-4 ring-white overflow-hidden">
                   {/* <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                     <User className="w-12 sm:w-16 h-12 sm:h-16 text-gray-400" />
                   </div> */}
 
-                  <Image src={'/bijoy.gif'} alt="Profile Image" className="w-full h-full object-cover rounded-full" />
+                  <Image src={profileGifSrc} alt="Profile Image" className="w-full h-full object-cover rounded-full" />
                 </div>
                 <button className="absolute bottom-2 right-2 w-10 sm:w-12 h-10 sm:h-12 bg-teal-500 hover:bg-teal-600 rounded-full flex items-center justify-center text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
                   <Camera className="w-5 sm:w-6 h-5 sm:h-6" />
@@ -752,44 +753,40 @@ const Account = () => {
             <nav className="flex space-x-6 sm:space-x-8 overflow-x-auto no-scrollbar">
               <button
                 onClick={() => setActiveTab('profile')}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === 'profile'
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'profile'
                     ? 'bg-teal-100 text-teal-700'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 <User className="w-4 h-4" /> Profile
               </button>
 
               <button
                 onClick={() => setActiveTab('history')}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === 'history'
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'history'
                     ? 'bg-teal-100 text-teal-700'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 <History className="w-4 h-4" /> History
               </button>
 
               <button
                 onClick={() => setActiveTab('payment')}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === 'payment'
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'payment'
                     ? 'bg-teal-100 text-teal-700'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 <CreditCard className="w-4 h-4" /> Payment
               </button>
 
               <button
                 onClick={() => setActiveTab('settings')}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === 'settings'
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${activeTab === 'settings'
                     ? 'bg-teal-100 text-teal-700'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 <Settings className="w-4 h-4" /> Settings
               </button>
