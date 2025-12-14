@@ -10,7 +10,7 @@ import { onAuthStateChanged, signOut, updateProfile } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 import { toast } from 'react-toastify'
 import Image from '../common/Image'
-import profileVideoSrc from '../../../public/bijoy.mp4'
+import profileGifSrc from '../../video/bijoy.gif'
 
 const Account = () => {
 
@@ -220,13 +220,7 @@ const Account = () => {
             <div className="absolute -bottom-20 left-4 sm:left-8">
               <div className="relative">
                 <div className="w-32 lg:w-52 h-32 lg:h-52 rounded-full bg-white shadow-2xl ring-4 ring-white overflow-hidden">
-                  <video
-                    src={profileVideoSrc}
-                    poster={profileGifSrc}
-                    controls={false}
-                    playsInline
-                    className="w-full h-full object-cover rounded-full"
-                  />
+                  <Image src={'profileGifSrc'} alt="Profile Image" className="w-full h-full object-cover rounded-full" />
                 </div>
                 <button className="absolute bottom-2 right-2 w-10 sm:w-12 h-10 sm:h-12 bg-teal-500 hover:bg-teal-600 rounded-full flex items-center justify-center text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
                   <Camera className="w-5 sm:w-6 h-5 sm:h-6" />
