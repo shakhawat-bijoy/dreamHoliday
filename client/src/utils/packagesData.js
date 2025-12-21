@@ -15,8 +15,7 @@ export const packagesData = [
     images: [
       'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=1400&q=80&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1400&q=80&auto=format&fit=crop&sat=-5',
-      'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1400&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1400&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1400&q=80&auto=format&fit=crop'
     ],
     highlights: ['Sunset cruise', 'Cliffside stay', 'Vineyard tour'],
     description: 'Unwind in whitewashed villages, sail to hidden coves, and savor Cycladic cuisine with a sea view.',
