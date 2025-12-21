@@ -15,7 +15,7 @@ const RootLayout = () => {
     <div>
 
       <Snowfall
-        snowflakeCount={100}
+        snowflakeCount={80}
         style={{
           position: 'fixed',
           width: '100%',
